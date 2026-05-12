@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1> Inscription </h1>
+        <div style="display: flex; gap: 40px;">
+
+            <div>
+                <div>
+                    <label for="nom">Nom :</label>
+                    <input id="nom" type="text"/>
+                </div>
+                <div>
+                    <label for="prenom">Prénom :</label>
+                    <input id="prenom" type="text"/>
+                </div>
+                <div>
+                    <label for="dateNaissance">Date naissance :</label>
+                    <input id="dateNaissance" type="date"/>
+                </div>
+                <div>
+                    <label for="adresse">Adresse postale :</label>
+                    <input id="adresse" type="text"/>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="telephone">Téléphone :</label>
+                    <input id="telephone" type="tel"/>
+                </div>
+                <div>
+                    <label for="mail">Mail :</label>
+                    <input id="mail" type="email"/>
+                </div>
+                <div>
+                    <label for="mdp">Mot de passe :</label>
+                    <input id="mdp" type="password"/>
+                    <span onclick="CacherMdp('mdp')">👁</span>
+                </div>
+                <div>
+                    <label for="mdp2">Valider mot de passe :</label>
+                    <input id="mdp2" type="password"/>
+                    <span onclick="CacherMdp('mdp2')">👁</span>
+                </div>
+            </div>
+        </div>
+        <button onclick="Inscrire()">Inscription</button>
+        <script>
+             function initPage() {
+                console.log("Initialisation de la page");
+
+            }
+            ;
+            function CacherMdp(id) {
+                let input = document.getElementById(id);
+                if (input.type === "password") {
+                    input.type = "text";
+                } else {
+                    input.type = "password";
+                }
+            }
+            async function Inscrire() {
+                console.log("Appel de l'Action: InscrireClient");
+                let mdp = document.getElementById("mdp").value;
+                let mdp2 = document.getElementById("mdp2").value;
+
+                if (mdp !== mdp2) {
+                    alert("Les mots de passe ne correspondent pas");
+                    return;
+                }
+                let params = {
+                    nom: document.getElementById("nom").value,
+                    prenom: document.getElementById("prenom").value,
+                    dateNaissance: document.getElementById("dateNaissance").value,
+                    adresse: document.getElementById("adresse").value,
+                    telephone: document.getElementById("telephone").value,
+                    mail: document.getElementById("mail").value,
+                    mdp: mdp
+                };
+                let url = `./ActionServlet?todo=inscrire-client`;
+                let options = {method: 'POST', body: new URLSearchParams(params)};
+                let jsonResponse = await fetch(url, options)
+                        .then((httpResponse) => {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
+                        })
+                        .catch((error) => {
+                            console.log('[AJAX ERROR]', error);
+                            return null;
+                        });
+                console.log(jsonResponse);
+                if (jsonResponse.succes) {
+                    window.location.href = "index.html";
+                } else {
+                    alert("L'inscription a échoué, veuillez vérifier votre adresse-mail et réessayez");
+                }
+
+
+
+            }
+            window.onload = initPage;
+        </script>
+    </body>
+</html>

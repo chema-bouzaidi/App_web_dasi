@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h1>Connexion</h1>
+        <div>
+            <label for="mail">Adresse mail :</label>
+            <input id="mail" type="email" />
+        </div>
+
+        <div style="position:relative; width:fit-content;">
+            <label for="mdp"> Mot de Passe </label>
+            <input id="mdp" type="password" style="padding-right:30px;"/>
+            <span onclick="CacherMdp('mdp')" style="position:absolute; right:5px; top:1px; cursor:pointer;">👁</span>
+        </div>
+        <button onclick="Authentifier()">Connexion</button>
+        <a href="Inscription.html">S'inscrire</a>
+
+        <script>
+            function initPage() {
+                console.log("Initialisation de la page");
+
+            }
+            ;
+            function CacherMdp(id) {
+                let input = document.getElementById(id);
+                if (input.type === "password") {
+                    input.type = "text";
+                } else {
+                    input.type = "password";
+                }
+            }
+
+            async function Authentifier() {
+                let Mail = document.getElementById("mail").value;
+                let Mdp = document.getElementById("mdp").value;
+                console.log("Appel de l'Action: Authentifier");
+                let url = `./ActionServlet?todo=authentifier&mail=${Mail}&mdp=${Mdp}`; // TODO : appeler l'ActionServlet pour lister les demandes
+
+                let jsonResponse = await fetch(url)
+                        .then(
+                                function (httpResponse) {
+                                    return httpResponse.json();
+                                }
+                        )
+                        .catch(
+                                function (error) {
+                                    console.log(error);
+                                    return null;
+                                }
+                        );
+
+                console.log(jsonResponse);
+                if (jsonResponse) {
+                    console.log('Authentification');
+                    console.log(jsonResponse);
+                    if (jsonResponse.statut === "client") {
+                        window.location.href = "AccueilClient.html";
+                    } else if (jsonResponse.statut === "employe") {
+                        window.location.href = "AccueilEmp.html";
+                    } else {
+                        alert("Veuillez réessayer en vérifiant mail et mdp");
+                    }
+
+
+                }
+
+            }
+            window.onload = initPage;
+        </script>
+    </body>
+</html>
+
+</html>
