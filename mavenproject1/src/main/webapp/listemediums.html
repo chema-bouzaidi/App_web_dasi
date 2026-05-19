@@ -40,14 +40,52 @@
                     for ( let medium of jsonResponse.mediums){
                         console.log(medium);
                         let li= document.createElement('li');
+                        let button=document.createElement('button');
+                        button.textContent="Prendre rendez-vous";
+                        button.onclick=function(){
+                            prendrerdv(medium.id);
+                            
+                        }
+                        li.appendChild(button);
                         let content= medium.denomination+ ":"+ medium.type+ " commentaire " + medium.presentation;
                         li.appendChild(document.createTextNode(content));
                         ul.appendChild(li);
                       
-                        
+                    
                     }
                 }
             }
+            
+            async function prendrerdv( idMedium){
+                console.log("Appel de l'Action: Prendre rdv");
+                let url = `./ActionServlet?todo=prendre-rdv&idMedium=${idMedium}`; // TODO : appeler l'ActionServlet pour lister les demandes
+                let jsonResponse = await fetch(url)
+                        .then(
+                            function(httpResponse) {
+                                return httpResponse.json();
+                            }
+                        )
+                        .catch(
+                            function(error) {
+                                console.log(error);
+                                return null;
+                            }
+                        );
+                if (jsonResponse) {
+                    console.log('Affichage de la prise de rdv');
+                    if (jsonResponse.succes){
+                        alert("Votre consultation a été demandée");
+                    }
+                    else{
+                        alert("Réessayez plus tard");
+                    }
+                      
+                    
+                    
+                }
+            }
+            
+            
             window.onload = initPage;
         </script>
     </body>

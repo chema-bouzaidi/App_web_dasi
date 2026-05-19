@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Historique des consultations</h1>
+        <h2>Mes consultations</h2>
+
+        <ul id="liste-consultations"></ul>
+         <script>
+              function initPage() {
+                console.log("Initialisation de la page");
+                chargerHistorique();
+
+            }
+            async function chargerHistorique() {
+                
+
+                let url = `./ActionServlet?todo=historique-consultations`;
+
+                let jsonResponse = await fetch(url)
+                    .then((httpResponse) => {
+                        if (!httpResponse.ok) {
+                            throw 'HTTP Error ' + httpResponse.status;
+                        }
+                        return httpResponse.json();
+                    })
+                    .catch((error) => {
+                        console.log('[AJAX ERROR]', error);
+                        return null;
+                    });
+
+                console.log(jsonResponse);
+
+                if (jsonResponse) {
+                    let ul = document.getElementById("liste-consultations");
+                    for (let consultation of jsonResponse.historique) {
+                        let li = document.createElement("li");
+                        li.textContent = "Médium : " + consultation.medium + " Date : " + consultation.date;
+                        ul.appendChild(li);
+                    }
+                }
+            }
+
+            window.onload = initPage;
+        </script>
+        
+    </body>
+</html>

@@ -13,9 +13,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import web.modele.AuthentifierAction;
 import web.modele.InscrireClientAction;
+import web.modele.PrendreRdvAction;
+import web.modele.RecupClientAction;
 import web.modele.RecupererListeMediumsAction;
 import web.vue.AuthentifierSerialisation;
 import web.vue.ListeMediumsSerialisation;
+import web.vue.ClientSerialisation;
 import web.vue.SuccesSerialisation;
 
 /**
@@ -66,6 +69,22 @@ public class ActionServlet extends HttpServlet {
                 new SuccesSerialisation().appliquer(request, response);
                 break;
             }
+            case "acceder-profil-astral": {
+                new RecupClientAction().execute(request);
+                new ClientSerialisation().appliquer(request,response);
+                
+            }
+            case "historique-consultations": {
+                new RecupClientAction().execute(request);
+                new ClientSerialisation().appliquer(request,response);
+                
+            }
+            case "prendre-rdv": {
+                new PrendreRdvAction().execute(request);
+                new SuccesSerialisation().appliquer(request,response);
+                
+            }
+            
         }
 
     }

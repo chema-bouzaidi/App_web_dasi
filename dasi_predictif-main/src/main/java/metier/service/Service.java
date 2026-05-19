@@ -30,8 +30,10 @@ public class Service {
         if (client.getProfilAstral() == null) {
             inscriptionWorked = false;
         }
-        client.setGps(ApiInteraction.getGpsCoordinates(client));
-        if(client.getGps() == null){
+        try { 
+        client.setGps(ApiInteraction.getGpsCoordinates(client));}
+        catch (Exception ex) {
+        //if(client.getGps() == null){
             inscriptionWorked = false;
         }
         

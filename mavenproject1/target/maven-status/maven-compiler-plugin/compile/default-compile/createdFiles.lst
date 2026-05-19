@@ -1,8 +1,11 @@
 web\modele\AuthentifierAction.class
 web\controleur\ActionServlet.class
+web\vue\ClientSerialisation.class
 web\modele\Action.class
+web\modele\RecupClientAction.class
 web\vue\SuccesSerialisation.class
 web\vue\AuthentifierSerialisation.class
+web\modele\PrendreRdvAction.class
 web\modele\RecupererListeMediumsAction.class
 web\vue\Serialisation.class
 web\modele\InscrireClientAction.class

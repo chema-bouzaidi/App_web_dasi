@@ -47,6 +47,7 @@ public class Predictif_scenario_alice {
         System.out.println(clientAuthentifie.getProfilAstral());
         System.out.println("Alice demande une consultation : ");
         Consultation consultation = Service.demanderConsultation(clientAuthentifie, Service.recupererMediumParId(10));
+       
         System.out.println(consultation);
 
     }

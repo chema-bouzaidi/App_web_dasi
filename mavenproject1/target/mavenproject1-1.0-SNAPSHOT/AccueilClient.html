@@ -10,6 +10,75 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Accueil Client</h1>
+        <h1>Mon Profil Astral</h1>
+        <h2 id="bienvenue"></h2>
+        <a href="listemediums.html"> mediums </a>
+        <a href="historique.html"> Historique </a>
+        <div>
+            <label > Signe du zodiaque: </label>
+            <span id="signeZodiaque"></span>
+        </div>
+         <div>
+             <label > Signe Chinois: </label>
+            <span id="signeChinois"></span>
+        </div>
+        <div>
+             <label >  Couleur: </label>
+            <span id="couleur"></span>
+        </div>
+         <div>
+            <label > AnimalTotem: </label>
+            <span id="AnimalTotem"></span>
+        </div>
+         
+        
+       
+         
+         
+         <script>
+            function initPage() {
+                console.log("Initialisation de la page");
+                AccederProfilAstral();
+
+            }
+             async function AccederProfilAstral() {
+               
+                console.log("Appel de l'Action: AccederProfilAstral");
+                let url = `./ActionServlet?todo=acceder-profil-astral`; // TODO : appeler l'ActionServlet pour lister les demandes
+
+                let jsonResponse = await fetch(url)
+                        .then(
+                                function (httpResponse) {
+                                    return httpResponse.json();
+                                }
+                        )
+                        .catch(
+                                function (error) {
+                                    console.log(error);
+                                    return null;
+                                }
+                        );
+
+                console.log(jsonResponse);
+                if (jsonResponse) {
+                    console.log(jsonResponse);
+                    document.getElementById("bienvenue").textContent="Bienvenue " + jsonResponse.prenom +"!";
+                    document.getElementById("signeZodiaque").textContent=jsonResponse.signeZodiaque;
+                    document.getElementById("signeChinois").textContent=jsonResponse.signeChinois;
+                     document.getElementById("couleur").textContent=jsonResponse.couleur;
+                     document.getElementById("AnimalTotem").textContent=jsonResponse.AnimalTotem;
+                     
+                    
+                   
+
+
+                }
+
+            }
+            window.onload = initPage;
+        </script>
+   
+        
+        
     </body>
 </html>
