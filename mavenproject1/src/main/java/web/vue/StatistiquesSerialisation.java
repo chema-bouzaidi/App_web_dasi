@@ -22,7 +22,6 @@ public class StatistiquesSerialisation extends Serialisation {
 
         JsonObjectBuilder json = Json.createObjectBuilder();
 
-        // Top 5 médiums
         List<Medium> top5Mediums = (List<Medium>) req.getAttribute("top5Mediums");
         JsonArrayBuilder jsonMediums = Json.createArrayBuilder();
         if (top5Mediums != null) {
@@ -35,7 +34,6 @@ public class StatistiquesSerialisation extends Serialisation {
         }
         json.add("top5Mediums", jsonMediums);
 
-        // Top 5 clients
         List<Client> top5Clients = (List<Client>) req.getAttribute("top5Clients");
         JsonArrayBuilder jsonClients = Json.createArrayBuilder();
         if (top5Clients != null) {
@@ -49,7 +47,6 @@ public class StatistiquesSerialisation extends Serialisation {
         }
         json.add("top5Clients", jsonClients);
 
-        // Top employés
         List<Employe> topEmployes = (List<Employe>) req.getAttribute("topEmployes");
         JsonArrayBuilder jsonEmployes = Json.createArrayBuilder();
         int totalConsultations = 0;
@@ -68,8 +65,13 @@ public class StatistiquesSerialisation extends Serialisation {
         }
         json.add("topEmployes", jsonEmployes);
 
-        double moyenne = nbEmployes > 0 ? (double) totalConsultations / nbEmployes : 0;
-        json.add("moyenneConsultationsParEmploye", Math.round(moyenne * 10.0) / 10.0);
+        double moyenne = 0.0;
+        if (nbEmployes > 0) {
+            moyenne = (double) totalConsultations / nbEmployes;
+        }
+        double moyenneArrondie = Math.round(moyenne * 10.0) / 10.0;
+
+        json.add("moyenneConsultationsParEmploye", moyenneArrondie);
 
         try (PrintWriter out = res.getWriter()) {
             out.print(json.build().toString());
