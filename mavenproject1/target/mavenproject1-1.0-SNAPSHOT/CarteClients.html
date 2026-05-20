@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Carte clients</title>
+        <style>
+            body { font-family: sans-serif; margin: 0; padding: 20px; box-sizing: border-box; }
+            a { font-size: 13px; color: #555; }
+            h1 { font-size: 22px; font-weight: 500; margin: 12px 0 16px; }
+
+            .layout {
+                display: flex;
+                gap: 24px;
+                height: calc(100vh - 100px);
+            }
+
+            #map {
+                flex: 1;
+                border-radius: 8px;
+            }
+
+            #profil {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 30px;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                background: #fff;
+            }
+
+            #profil h2 {
+                font-size: 20px;
+                font-weight: 500;
+                margin: 0 0 24px;
+            }
+
+            #profil .vide {
+                color: #aaa;
+                font-size: 14px;
+                text-align: center;
+            }
+
+            .champ {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 16px;
+                font-size: 14px;
+            }
+
+            .champ .clé { color: #777; min-width: 140px; font-weight: 500; }
+            .champ .valeur { color: #222; }
+        </style>
+    </head>
+    <body>
+        <h1>Carte des clients</h1>
+
+        <div class="layout">
+            <div id="map"></div>
+            <div id="profil">
+            </div>
+        </div>
+
+        <script>
+            var googleMapInstance = null;
+
+            function initMap() {
+                googleMapInstance = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 46.8, lng: 2.3 },
+                    zoom: 6
+                });
+                chargerClients();
+            }
+
+            function afficherProfil(c) {
+                document.getElementById('profil').innerHTML =
+                    '<h2>Profil du client</h2>' +
+                    '<div class="champ"><span class="clé">Adresse postale :</span><span class="valeur">' + (c.adresse || '—') + '</span></div>' +
+                    '<div class="champ"><span class="clé">Nom :</span><span class="valeur">' + (c.nom || '—') + '</span></div>' +
+                    '<div class="champ"><span class="clé">Prénom :</span><span class="valeur">' + (c.prenom || '—') + '</span></div>';
+            }
+
+            async function chargerClients() {
+                let json = await fetch('./ActionServlet?todo=carteclients')
+                    .then(r => { if (!r.ok) throw r.status; return r.json(); })
+                    .catch(e => { console.log(e); return null; });
+
+                if (!json) return;
+
+                for (let c of json.clients) {
+                    if (c.latitude && c.longitude) {
+                        let marker = new google.maps.Marker({
+                            map: googleMapInstance,
+                            position: { lat: c.latitude, lng: c.longitude },
+                            title: c.prenom + ' ' + c.nom
+                        });
+
+                        marker.addListener('click', (function(client) {
+                            return function() { afficherProfil(client); };
+                        })(c));
+                    }
+                }
+            }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf3JleYpal9S-xouJYH8lf7Dvz5Y2Nko&callback=initMap"></script>
+    </body>
+</html>

@@ -5,12 +5,14 @@ C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\Action.
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\ObtenirPredictionAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupConsultationActuelleEmployeAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\PredictionSerialisation.java
+C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\CarteClientsSerialisation.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\controleur\ActionServlet.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\PrendreRdvAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupererListeMediumsAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\ClientSerialisation.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupStatistiquesAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\InscrireClientAction.java
+C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupCarteClientsAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\TerminerConsultationAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\SeMettrePretAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\ConsultationEmployeSerialisation.java

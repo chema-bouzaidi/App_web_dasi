@@ -15,6 +15,7 @@ import web.modele.AuthentifierAction;
 import web.modele.InscrireClientAction;
 import web.modele.ObtenirPredictionAction;
 import web.modele.PrendreRdvAction;
+import web.modele.RecupCarteClientsAction;
 import web.modele.RecupClientAction;
 import web.modele.RecupConsultationActuelleEmployeAction;
 import web.modele.RecupStatistiquesAction;
@@ -22,6 +23,7 @@ import web.modele.RecupererListeMediumsAction;
 import web.modele.SeMettrePretAction;
 import web.modele.TerminerConsultationAction;
 import web.vue.AuthentifierSerialisation;
+import web.vue.CarteClientsSerialisation;
 import web.vue.ListeMediumsSerialisation;
 import web.vue.ClientSerialisation;
 import web.vue.ConsultationEmployeSerialisation;
@@ -119,7 +121,12 @@ public class ActionServlet extends HttpServlet {
                 new RecupStatistiquesAction().execute(request);
                 new StatistiquesSerialisation().appliquer(request, response);
                 break;
-}
+            }
+            case "carteclients": {
+                new RecupCarteClientsAction().execute(request);
+                new CarteClientsSerialisation().appliquer(request, response);
+                break;
+            }
             
         }
 
