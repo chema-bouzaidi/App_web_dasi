@@ -13,12 +13,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import web.modele.AuthentifierAction;
 import web.modele.InscrireClientAction;
+import web.modele.ObtenirPredictionAction;
 import web.modele.PrendreRdvAction;
 import web.modele.RecupClientAction;
+import web.modele.RecupConsultationActuelleEmployeAction;
 import web.modele.RecupererListeMediumsAction;
+import web.modele.SeMettrePretAction;
+import web.modele.TerminerConsultationAction;
 import web.vue.AuthentifierSerialisation;
 import web.vue.ListeMediumsSerialisation;
 import web.vue.ClientSerialisation;
+import web.vue.ConsultationEmployeSerialisation;
+import web.vue.PredictionSerialisation;
 import web.vue.SuccesSerialisation;
 
 /**
@@ -86,6 +92,28 @@ public class ActionServlet extends HttpServlet {
                 break;
                 
             }
+            case "ma-consultation": {
+                new RecupConsultationActuelleEmployeAction().execute(request);
+                new ConsultationEmployeSerialisation().appliquer(request, response);
+                break;
+            }
+            case "se-mettre-pret": {
+                new SeMettrePretAction().execute(request);
+                new SuccesSerialisation().appliquer(request, response);
+                break;
+            }
+            case "obtenir-prediction": {
+                new ObtenirPredictionAction().execute(request);
+                new PredictionSerialisation().appliquer(request, response);
+                break;
+            }
+            case "terminer-consultation": {
+                new TerminerConsultationAction().execute(request);
+                new SuccesSerialisation().appliquer(request, response);
+                break;
+            }
+
+
             
         }
 
