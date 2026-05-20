@@ -1,133 +1,327 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="style.css">
         <title>Statistiques</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="./js/echarts_v6.0.0.min.js"></script>
         <style>
-            body { font-family: sans-serif; padding: 20px; background: #f8f8f8; }
-            h1 { margin-bottom: 24px; }
-            h2 { margin-bottom: 10px; font-size: 0.75rem; text-transform: uppercase;
-                 letter-spacing: 0.06em; color: #777; }
+            /* --- REINITIALISATION ET CONFIGURATION DU FOND --- */
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Roboto:wght@400;700&display=swap');
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Roboto', Arial, sans-serif;
+            }
+
+            .main-content-area {
+                flex: 1;
+                background-image: url('fond_statistiques.png');
+                background-size: cover;
+                background-position: center;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+                min-height: 550px;
+                box-sizing: border-box;
+            }
+
+            /* Titre "Statistiques" en doré / jaune pâle et en italique chic */
+            .titre-page-gold {
+                font-size: 52px;
+                font-family: 'Playfair Display', Georgia, serif;
+                font-style: italic;
+                color: #fce6b0;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+                margin-top: 0;
+                margin-bottom: 35px;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+
             .colonnes {
-                display: flex; gap: 30px; flex-wrap: wrap;
-                margin-top: 20px; align-items: flex-start; justify-content: center;
+                display: flex;
+                gap: 40px;
+                align-items: flex-start;
+                justify-content: space-between;
+                width: 100%;
+                max-width: 1100px;
             }
-            .top5-col { flex: 1; min-width: 180px; max-width: 230px; }
+
+            /* --- COLONNES TOP 5 (SANS RADIUS, SANS SOURCIL TRANSPARENT) --- */
+            .top5-col {
+                flex: 1;
+                min-width: 260px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .top5-col h2 {
+                font-family: 'Roboto', Arial, sans-serif;
+                font-weight: 800;
+                font-size: 24px;
+                text-align: center;
+                margin: 0;
+                line-height: 1.1;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+            
+            .top5-col .sub-title {
+                font-size: 20px;
+                font-weight: 700;
+                text-align: center;
+                margin-top: 2px;
+                margin-bottom: 25px;
+                text-transform: uppercase;
+            }
+
+            /* Couleurs exactes des titres de l'image */
+            .title-mediums { color: #8fd4ff; }
+            .title-clients { color: #fae69e; }
+
+            .top5-header {
+                display: flex;
+                justify-content: space-between;
+                font-size: 11px;
+                color: #9cb1cc;
+                margin-bottom: 12px;
+                padding: 0 4px;
+                font-weight: bold;
+            }
+            .top5-header span:last-child {
+                width: 80px;
+                text-align: center;
+            }
+
+            .liste-container {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+
             .top5-row {
-                display: flex; justify-content: space-between; align-items: center;
-                padding: 8px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 4px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                font-size: 15px;
             }
-            .top5-row .nom { font-size: 14px; color: #222; }
-            .nb {
-                background: #6c63ff; color: #fff;
-                border-radius: 12px; padding: 2px 10px;
-                font-size: 12px; font-weight: 600;
-                white-space: nowrap; margin-left: 10px;
+
+            .top5-row:last-child {
+                border-bottom: none;
             }
+
+            .name-container {
+                flex: 1;
+                display: flex;
+                align-items: center;
+            }
+
+            /* Petits avatars discrets */
+            .avatar-icon {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background-color: rgba(255,255,255,0.15);
+                border: 1px solid rgba(255,255,255,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                color: rgba(255,255,255,0.7);
+                margin-right: 12px;
+                flex-shrink: 0;
+            }
+
+            .top5-row .nom {
+                color: white;
+                font-weight: 500;
+            }
+
+            /* Chiffre noir dans rectangle gris-bleu clair opaque */
+            .nb-box {
+                background-color: #d1dcfa;
+                color: #111111;
+                border-radius: 6px;
+                width: 40px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 13px;
+                font-weight: 700;
+                margin-left: 15px;
+                box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+            }
+
+            /* --- COLONNE CENTRALE CAMEMBERT --- */
             .camembert-col {
-                display: flex; flex-direction: column;
-                align-items: center; min-width: 260px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 320px;
             }
-            .titre-moy {
-                display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+
+            .stat-moy {
+                font-size: 14px;
+                margin-bottom: 16px;
+                color: white;
+                text-align: center;
             }
-            .titre-moy .label {
-                font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
-                letter-spacing: 0.06em; color: #777;
+            
+            /* Badge de la moyenne en bleu rectangle */
+            .stat-moy strong {
+                font-size: 15px;
+                font-weight: bold;
+                background-color: #2b4570;
+                padding: 3px 10px;
+                border-radius: 5px;
+                margin-left: 8px;
+                border: 1px solid rgba(255,255,255,0.2);
             }
+
             .cam-title {
-                font-size: 0.75rem; font-weight: 500; text-transform: uppercase;
-                letter-spacing: 0.06em; color: #777; margin: 0 0 6px; text-align: center;
+                font-size: 14px;
+                color: white;
+                margin-bottom: 20px;
+                text-align: center;
             }
-            #camembert { width: 260px; height: 260px; }
+
+            /* Encadré d'ECharts avec fond subtilement obscurci */
+            #camembert {
+                width: 300px;
+                height: 300px;
+                background-color: rgba(6, 15, 33, 0.55);
+                border-radius: 12px;
+                border: 1px solid rgba(255,255,255,0.08);
+                box-sizing: border-box;
+            }
         </style>
     </head>
     <body>
-        <a href="AccueilEmp.html">&larr; Retour</a>
-        <h1>Statistiques</h1>
+        <nav id="header"></nav>
 
-        <div class="colonnes">
+        <div class="main-content-area">
+            <h1 class="titre-page-gold">Statistiques</h1>
 
-            <div class="top5-col">
-                <h2>Top 5 Médiums</h2>
-                <div id="liste-mediums"></div>
-            </div>
-
-            <div class="camembert-col">
-                <div class="titre-moy">
-                    <span class="label">Nombre consultations / médium</span>
-                    <span class="nb" id="moyenne-employes"></span>
+            <div class="colonnes">
+                <div class="top5-col">
+                    <h2 class="title-mediums">TOP 5</h2>
+                    <div class="sub-title title-mediums">Médiums</div>
+                    <div class="top5-header"><span>Nom Prénom</span><span>Nombre consultations</span></div>
+                    <div id="liste-mediums" class="liste-container"></div>
                 </div>
-                <p class="cam-title">Répartition clients par employé</p>
-                <div id="camembert"></div>
-            </div>
 
-            <div class="top5-col">
-                <h2>Top 5 Pigeons Clients</h2>
-                <div id="liste-clients"></div>
-            </div>
+                <div class="camembert-col">
+                    <div class="stat-moy">Nombre consultations/médium :<strong id="moyenne-employes">0</strong></div>
+                    <div class="cam-title">Répartition Clients par Employé :</div>
+                    <div id="camembert"></div>
+                </div>
 
+                <div class="top5-col">
+                    <h2 class="title-clients">TOP 5</h2>
+                    <div class="sub-title title-clients">Clients</div>
+                    <div class="top5-header"><span>Nom Prénom</span><span>Nombre consultations</span></div>
+                    <div id="liste-clients" class="liste-container"></div>
+                </div>
+            </div>
         </div>
 
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+        <script src="header.js"></script>
         <script>
+            const avatarGlyph = '👤';
+
             async function chargerStatistiques() {
+                // Appel AJAX réel et dynamique vers ton back-end
                 let json = await fetch('./ActionServlet?todo=statistiques')
                     .then(r => { if (!r.ok) throw r.status; return r.json(); })
                     .catch(e => { console.log(e); return null; });
 
                 if (!json) {
-                    document.body.innerHTML += '<p>Erreur lors du chargement des statistiques.</p>';
+                    document.querySelector('.main-content-area').innerHTML += '<p>Erreur lors du chargement des statistiques.</p>';
                     return;
                 }
 
+                // Injecte la vraie moyenne de ton app
+                document.getElementById('moyenne-employes').textContent = json.moyenneConsultationsParEmploye;
+
+                // Remplissage dynamique des Médiums depuis ta BDD
                 let listeMediums = document.getElementById('liste-mediums');
-                for (let m of json.top5Mediums) {
+                listeMediums.innerHTML = '';
+                json.top5Mediums.forEach(m => {
                     let div = document.createElement('div');
                     div.className = 'top5-row';
-                    div.innerHTML = '<span class="nom">' + m.denomination + '</span>'
-                                  + '<span class="nb">' + m.nbConsultations + '</span>';
+                    div.innerHTML = `<div class="name-container">
+                                        <div class="avatar-icon">${avatarGlyph}</div>
+                                        <span class="nom">${m.denomination}</span>
+                                     </div>
+                                     <div class="nb-box">${m.nbConsultations}</div>`;
                     listeMediums.appendChild(div);
-                }
+                });
 
+                // Remplissage dynamique des Clients depuis ta BDD
                 let listeClients = document.getElementById('liste-clients');
-                for (let c of json.top5Clients) {
+                listeClients.innerHTML = '';
+                json.top5Clients.forEach(c => {
                     let div = document.createElement('div');
                     div.className = 'top5-row';
-                    div.innerHTML = '<span class="nom">' + c.prenom + ' ' + c.nom + '</span>'
-                                  + '<span class="nb">' + c.nbConsultations + '</span>';
+                    div.innerHTML = `<div class="name-container">
+                                        <div class="avatar-icon">${avatarGlyph}</div>
+                                        <span class="nom">${c.prenom} ${c.nom}</span>
+                                     </div>
+                                     <div class="nb-box">${c.nbConsultations}</div>`;
                     listeClients.appendChild(div);
-                }
+                });
 
-                document.getElementById('moyenne-employes').textContent =
-                    json.moyenneConsultationsParEmploye;
-
+                // Dessine le graphique avec tes vrais employés
                 dessinerCamembert(json.topEmployes);
             }
 
             function dessinerCamembert(employes) {
-                let data = employes.map(e => ({
-                    name: e.prenom + ' ' + e.nom,
-                    value: e.nbConsultations
+                // Palette de couleurs de la maquette (Rouge, Jaune, Violet, Bleu)
+                const colors = ['#e64a19', '#fbc02d', '#7b1fa2', '#1976d2'];
+
+                let data = employes.map((e, index) => ({
+                    name: e.prenom,
+                    value: e.nbConsultations,
+                    itemStyle: { color: colors[index % colors.length] }
                 }));
 
                 let chart = echarts.init(document.getElementById('camembert'));
                 chart.setOption({
-                    tooltip: { trigger: 'item' },
+                    tooltip: { trigger: 'item', formatter: '{b}: {d}%' },
                     legend: { show: false },
                     series: [{
                         type: 'pie',
-                        radius: ['40%', '70%'],
-                        avoidLabelOverlap: false,
-                        itemStyle: {
-                            borderRadius: 6,
-                            borderColor: '#f8f8f8',
-                            borderWidth: 2
-                        },
-                        label: { show: false },
-                        emphasis: {
-                            label: { show: true, fontSize: 14, fontWeight: 'bold' }
+                        radius: '65%',
+                        center: ['50%', '50%'],
+                        avoidLabelOverlap: true,
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            color: 'white',
+                            fontSize: 12,
+                            fontFamily: 'Arial, sans-serif',
+                            formatter: '{b}\n{d}%'
                         },
                         labelLine: { show: false },
                         data: data
@@ -135,7 +329,10 @@
                 });
             }
 
-            window.onload = chargerStatistiques;
+            window.onload = function() {
+                if (typeof afficherHeader === 'function') { afficherHeader(); }
+                chargerStatistiques();
+            };
         </script>
     </body>
 </html>

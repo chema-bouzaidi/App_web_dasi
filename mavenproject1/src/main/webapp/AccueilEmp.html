@@ -1,17 +1,75 @@
 <!DOCTYPE html>
-
-
 <html>
     <head>
-        <title>Accueil Employé</title>
+        <link rel="stylesheet" href="style.css">
+        <title>PREDICT'IF</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+           
+            
+            
+            .contenu {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 60px 20px;
+                text-align: center;
+            }
+            .titre {
+                font-size: 52px;
+                font-style: italic;
+                font-family: Georgia, serif;
+                text-shadow: 0 0 8px rgba(255,255,255,0.3), 2px 2px 0 #555;
+                letter-spacing: 3px;
+                margin-bottom: 8px;
+            }
+            .slogan {
+                color: #ccd6f6;
+                font-style: italic;
+                font-size: 16px;
+                margin-bottom: 25px;
+            }
+            .services {
+                list-style: none;
+                font-size: 15px;
+                line-height: 2.2;
+            }
+           
+        </style>
     </head>
     <body>
-        <h1>Accueil Employé</h1>
-        <button onclick="window.location.href='MaConsultation.html'">Ma Consultation</button>
-        <button onclick="window.location.href='Statistiques.html'">Statistiques</button>
-        <button onclick="window.location.href='CarteClients.html'">Carte client</button>
+        <nav id="header"></nav>
 
+        <div class="contenu">
+            <div class="titre">PREDICT'IF</div>
+            <div class="slogan">Découvrez ce que le destin vous réserve</div>
+            <ul class="services">
+                <li>🔮 Consultations personnalisées</li>
+                <li>🌙 Médiums certifiés</li>
+                <li>🛡️ 100% confidentiel</li>
+                <li>⏰ Disponible 24h/24</li>
+            </ul>
+        </div>
+
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+        <script src="header.js"></script>
+
+        <script>
+            window.onload = afficherHeader;
+        </script>
     </body>
 </html>

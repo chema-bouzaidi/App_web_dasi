@@ -1,64 +1,324 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="style.css">
         <title>Ma Consultation</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
-            #phase-consultation {
+            .contenu {
+                flex: 1;
+                padding: 30px 40px;
                 display: flex;
-                gap: 60px;
-                margin-top: 20px;
+                flex-direction: column;
+                align-items: center;
             }
-            .section-titre {
+
+            /* --- GRAND PANNEAU CENTRAL DE LA MAQUETTE --- */
+            .panneau-consultation {
+                background-color: #1c335e; /* Bleu nuit fidèle à l'image */
+                background-image: linear-gradient(135deg, #16264c 0%, #1f3b6b 100%);
+                border: 1px solid rgba(255,255,255,0.15);
+                border-radius: 10px;
+                padding: 25px 35px;
+                width: 100%;
+                max-width: 950px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                position: relative;
+            }
+
+            /* --- TITRES INTERNES CENTRÉS (DANS LE BLOC BLEU) --- */
+            .entete-interne {
+                width: 100%;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .titre-page {
+                font-size: 34px;
+                font-family: Georgia, serif;
+                font-style: italic;
+                color: #ffffff;
+                margin: 0;
+                font-weight: normal;
+                display: inline-block;
+            }
+            .sous-titre {
+                color: #ccd6f6;
+                font-style: italic;
+                font-size: 16px;
+                margin-top: 6px;
+                margin-bottom: 5px;
+            }
+
+            /* --- SECTION GAUCHE : PROFIL ASTRAL --- */
+            .section-profil {
+                flex: 1;
+                min-width: 320px;
+                padding-right: 20px;
+            }
+            .section-profil h2 {
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                color: #ffffff;
+                margin-top: 0;
+                margin-bottom: 20px;
                 font-weight: bold;
-                margin-bottom: 8px;
             }
+            .champ {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 12px;
+                font-size: 15px;
+            }
+            .champ label {
+                color: #ffffff;
+                margin-right: 15px;
+                text-align: right;
+                flex: 1;
+            }
+            .champ span {
+                background: #28477d;
+                border: 1px solid #365d9d;
+                border-radius: 6px;
+                padding: 6px 14px;
+                color: #ffffff;
+                font-weight: normal;
+                width: 170px;
+                display: inline-block;
+            }
+
+            /* --- SECTION DROITE : HISTORIQUE --- */
+            .section-historique {
+                flex: 1;
+                min-width: 380px;
+            }
+            .section-historique h2 {
+                font-family: Arial, sans-serif;
+                font-size: 20px;
+                color: #ffffff;
+                margin-top: 0;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
+
+            /* --- LISTE DÉROULANTE (ACCORDÉON) --- */
+            .card-consultation {
+                background: rgba(0, 0, 0, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 6px;
+                margin-bottom: 10px;
+                font-size: 13px;
+                overflow: hidden;
+            }
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 14px;
+                cursor: pointer;
+                user-select: none;
+            }
+            .card-header:hover {
+                background: rgba(255,255,255,0.03);
+            }
+            .card-consultation .meta {
+                color: #ffffff;
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                font-size: 14px;
+            }
+            .meta span {
+                background: #28477d;
+                border: 1px solid #365d9d;
+                padding: 4px 12px;
+                border-radius: 5px;
+                color: #fff;
+                margin-left: 6px;
+                display: inline-block;
+            }
+            .fleche {
+                font-size: 16px;
+                color: #ffffff;
+                font-weight: bold;
+                padding-right: 5px;
+            }
+            .card-body {
+                display: none;
+                padding: 12px 14px;
+                border-top: 1px solid rgba(255,255,255,0.08);
+                background: rgba(0, 0, 0, 0.25);
+                color: #ffffff;
+                line-height: 1.6;
+            }
+            .card-consultation.actif .card-body {
+                display: block;
+            }
+
+            /* --- BOUTONS ET BLOCS DE LA MAQUETTE DE CONSULTATION ACTIVE --- */
+            .zone-bouton-centre {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            .btn-demarrer, .btn-action, .btn-terminer {
+                background-color: #633b7a; /* Violet sombre de l'image */
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                cursor: pointer;
+                padding: 10px 25px;
+                font-size: 15px;
+                transition: background-color 0.2s ease;
+            }
+            .btn-demarrer:hover, .btn-action:hover, .btn-terminer:hover {
+                background-color: #4f2d63;
+            }
+
+            /* Conteneur principal pour la phase active */
+            #phase-consultation-container {
+                width: 100%;
+                max-width: 950px;
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .colonnes-consultation {
+                display: flex;
+                gap: 40px;
+                width: 100%;
+            }
+
+            .colonne-pred {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .section-titre {
+                font-size: 24px;
+                color: white;
+                margin-bottom: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            .sub-section-titre {
+                font-size: 15px;
+                color: #ccd6f6;
+                margin-bottom: 10px;
+            }
+
+            /* Grille pour les prédictions (Amour, Santé, Travail) */
+            .prediction-grid-container {
+                display: flex;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .grille-niveaux {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
             .niveaux {
                 display: flex;
                 gap: 8px;
-                margin-bottom: 10px;
                 align-items: center;
             }
             .niveaux label {
                 width: 60px;
+                font-size: 15px;
+                color: white;
             }
             .niveaux button {
-                width: 35px;
+                width: 32px;
+                height: 32px;
+                background: #505c8c; /* Bleu-gris des boutons inactifs */
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 14px;
             }
             .niveaux button.selectionne {
-                background-color: #555;
-                color: white;
+                background-color: #8352a3; /* Violet clair pour l'élément sélectionné */
             }
+
+            /* Zone d'affichage du texte de la prédiction */
             #zone-prediction {
-                margin-top: 15px;
-                white-space: pre-line;
+                flex: 1;
+                min-height: 115px;
+                background: rgba(0, 0, 0, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
+                padding: 12px;
+                font-size: 14px;
+                color: #ffffff;
+                line-height: 1.4;
+                max-width: 250px;
             }
-            #zone-commentaire {
-                margin-top: 20px;
-            }
+
+            /* Bloc Commentaire */
             #commentaire {
                 display: block;
-                width: 300px;
-                height: 80px;
-                margin-top: 6px;
-            }
-            #btn-terminer {
-                margin-top: 15px;
-                background-color: #c0392b;
+                width: 100%;
+                height: 115px;
+                background: rgba(0, 0, 0, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 6px;
                 color: white;
-                padding: 8px 16px;
-                cursor: pointer;
+                padding: 12px;
+                font-size: 14px;
+                box-sizing: border-box;
+                resize: none;
             }
         </style>
     </head>
     <body>
-        <div id="entete"></div>
-        <div id="phase-attente"></div>
-        <div id="phase-consultation" style="display:none;"></div>
+        <nav id="header"></nav>
 
+        <div class="contenu">
+            <div id="phase-attente"></div>
+            <div id="phase-consultation-container" style="display:none;"></div>
+        </div>
+
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+        <script src="header.js"></script>
         <script>
             let niveaux = { amour: null, sante: null, travail: null };
+
+            function toggleAccordeon(element) {
+                let card = element.parentElement;
+                let fleche = element.querySelector('.fleche');
+                
+                card.classList.toggle('actif');
+                
+                if (card.classList.contains('actif')) {
+                    fleche.textContent = '∨';
+                } else {
+                    fleche.textContent = '>';
+                }
+            }
 
             async function chargerMaConsultation() {
                 let url = './ActionServlet?todo=ma-consultation';
@@ -66,39 +326,59 @@
                     .then(r => { if (!r.ok) throw r.status; return r.json(); })
                     .catch(e => { console.log(e); return null; });
 
-                let entete = document.getElementById('entete');
                 let attente = document.getElementById('phase-attente');
 
                 if (!json || !json.succes) {
-                    attente.innerHTML = '<p>Aucune consultation en cours.</p>';
+                    attente.innerHTML = '<p style="color:#ccd6f6; font-style:italic;">Aucune consultation en cours.</p>';
                     return;
                 }
 
-                // Entête permanent
-                entete.innerHTML = '<h1>Ma Consultation avec ' + json.prenomClient + ' ' + json.nomClient + '</h1>';
-
-                // Phase attente
-                let html = '<h2>Vous incarnez ' + json.denominationMedium + '</h2>';
-                html += '<h2>Profil Astral de ' + json.prenomClient + ' ' + json.nomClient + '</h2>';
-                html += '<div><label>Signe du zodiaque : </label><span>' + json.signeZodiaque + '</span></div>';
-                html += '<div><label>Signe Chinois : </label><span>' + json.signeChinois + '</span></div>';
-                html += '<div><label>Couleur : </label><span>' + json.couleur + '</span></div>';
-                html += '<div><label>Animal Totem : </label><span>' + json.animalTotem + '</span></div>';
-                html += '<h2>Historique des consultations</h2>';
-
+                let historiqueHtml = '';
                 if (!json.historique || json.historique.length === 0) {
-                    html += '<p>Aucune consultation passée.</p>';
+                    historiqueHtml = '<p style="color:#ffffff; font-size:13px;">Aucune consultation passée.</p>';
                 } else {
-                    html += '<ul>';
                     for (let c of json.historique) {
-                        let commentaire = c.commentaire ? ' — ' + c.commentaire : '';
-                        html += '<li>Médium : ' + c.medium + ' | Date : ' + c.date + commentaire + '</li>';
+                        historiqueHtml += `
+                            <div class="card-consultation">
+                                <div class="card-header" onclick="toggleAccordeon(this)">
+                                    <div class="meta">
+                                        <div>Médium: <span>${c.medium}</span></div>  
+                                        <div>Date: <span>${c.date}</span></div>
+                                    </div>
+                                    <div class="fleche">&gt;</div>
+                                </div>
+                                <div class="card-body">
+                                    <strong>Commentaire :</strong> ${c.commentaire ? c.commentaire : 'Aucun commentaire.'}
+                                </div>
+                            </div>`;
                     }
-                    html += '</ul>';
                 }
 
-                html += '<button onclick="demarrerConsultation()">Démarrer la Consultation</button>';
-                attente.innerHTML = html;
+                attente.innerHTML = `
+                    <div class="panneau-consultation" id="main-panel">
+                        <div class="entete-interne">
+                            <h1 class="titre-page">Ma Consultation avec ${json.prenomClient} ${json.nomClient}</h1>
+                            <div class="sous-titre">Vous incarnez ${json.denominationMedium} !</div>
+                        </div>
+
+                        <div class="section-profil" id="sec-profil">
+                            <h2>Profil astral</h2>
+                            <div class="champ"><label>Signe du zodiaque :</label><span>${json.signeZodiaque}</span></div>
+                            <div class="champ"><label>Signe chinois :</label><span>${json.signeChinois}</span></div>
+                            <div class="champ"><label>Couleur :</label><span>${json.couleur}</span></div>
+                            <div class="champ"><label>Animal totem :</label><span>${json.animalTotem}</span></div>
+                        </div>
+
+                        <div class="section-historique" id="sec-historique">
+                            <h2>Historique</h2>
+                            ${historiqueHtml}
+                        </div>
+
+                        <div class="zone-bouton-centre" id="sec-bouton-demarrer">
+                            <button class="btn-demarrer" onclick="demarrerConsultation()">Démarrer la consultation</button>
+                        </div>
+                    </div>
+                `;
             }
 
             async function demarrerConsultation() {
@@ -109,7 +389,13 @@
 
                 if (json && json.succes) {
                     alert('Vous recevrez vite un appel du client !');
-                    document.getElementById('phase-attente').style.display = 'none';
+                    
+                    // On vide le contenu précédent (profil et historique) de notre panneau bleu nuit
+                    document.getElementById('sec-profil').remove();
+                    document.getElementById('sec-historique').remove();
+                    document.getElementById('sec-bouton-demarrer').remove();
+                    
+                    // On appelle la fonction pour injecter la nouvelle structure à l'intérieur du panneau bleu nuit
                     afficherPhaseConsultation();
                 } else {
                     alert('Échec du démarrage de la consultation.');
@@ -117,49 +403,55 @@
             }
 
             function afficherPhaseConsultation() {
-                let phase = document.getElementById('phase-consultation');
-                phase.style.display = 'flex';
+                let panel = document.getElementById('main-panel');
 
-                // Colonne gauche : prédiction
-                let colPred = document.createElement('div');
-                colPred.innerHTML = `
-                    <div class="section-titre">Faire une prédiction</div>
-                    <div class="niveaux">
-                        <label>Amour</label>
-                        <button onclick="selectionner('amour',1,this)">1</button>
-                        <button onclick="selectionner('amour',2,this)">2</button>
-                        <button onclick="selectionner('amour',3,this)">3</button>
-                        <button onclick="selectionner('amour',4,this)">4</button>
-                    </div>
-                    <div class="niveaux">
-                        <label>Santé</label>
-                        <button onclick="selectionner('sante',1,this)">1</button>
-                        <button onclick="selectionner('sante',2,this)">2</button>
-                        <button onclick="selectionner('sante',3,this)">3</button>
-                        <button onclick="selectionner('sante',4,this)">4</button>
-                    </div>
-                    <div class="niveaux">
-                        <label>Travail</label>
-                        <button onclick="selectionner('travail',1,this)">1</button>
-                        <button onclick="selectionner('travail',2,this)">2</button>
-                        <button onclick="selectionner('travail',3,this)">3</button>
-                        <button onclick="selectionner('travail',4,this)">4</button>
-                    </div>
-                    <button onclick="fairePrediction()">Faire la prédiction</button>
-                    <div id="zone-prediction"></div>
-                `;
-                phase.appendChild(colPred);
+                let container = document.getElementById('phase-consultation-container');
+                container.style.display = 'flex';
+                
+                container.innerHTML = `
+                    <div class="colonnes-consultation">
+                        <div class="colonne-pred">
+                            <div class="section-titre">Faire une prédiction</div>
+                            <div class="prediction-grid-container">
+                                <div class="grille-niveaux">
+                                    <div class="niveaux"><label>Amour</label>
+                                        <button onclick="selectionner('amour',1,this)">1</button>
+                                        <button onclick="selectionner('amour',2,this)">2</button>
+                                        <button onclick="selectionner('amour',3,this)">3</button>
+                                        <button onclick="selectionner('amour',4,this)">4</button>
+                                    </div>
+                                    <div class="niveaux"><label>Santé</label>
+                                        <button onclick="selectionner('sante',1,this)">1</button>
+                                        <button onclick="selectionner('sante',2,this)">2</button>
+                                        <button onclick="selectionner('sante',3,this)">3</button>
+                                        <button onclick="selectionner('sante',4,this)">4</button>
+                                    </div>
+                                    <div class="niveaux"><label>Travail</label>
+                                        <button onclick="selectionner('travail',1,this)">1</button>
+                                        <button onclick="selectionner('travail',2,this)">2</button>
+                                        <button onclick="selectionner('travail',3,this)">3</button>
+                                        <button onclick="selectionner('travail',4,this)">4</button>
+                                    </div>
+                                    <button class="btn-action" style="margin-top: 15px; width: fit-content;" onclick="fairePrediction()">Faire la prédiction</button>
+                                </div>
+                                <div id="zone-prediction"><em>Les lignes de votre avenir s'écriront ici...</em></div>
+                            </div>
+                        </div>
 
-                // Colonne droite : commentaire + terminer
-                let colTerminer = document.createElement('div');
-                colTerminer.innerHTML = `
-                    <div id="zone-commentaire">
-                        <div class="section-titre">Commentaire</div>
-                        <textarea id="commentaire" placeholder="Laissez votre commentaire..."></textarea>
+                        <div class="colonne-pred">
+                            <div class="section-titre">Commentaire</div>
+                            <div class="sub-section-titre">Décrivez votre ressenti du client sur cette consultation :</div>
+                            <textarea id="commentaire" placeholder="Paul a toujours l'air aussi naïf..."></textarea>
+                        </div>
                     </div>
-                    <button id="btn-terminer" onclick="terminerConsultation()">Terminer la Consultation</button>
+
+                    <div class="zone-bouton-centre">
+                        <button id="btn-terminer" class="btn-terminer" onclick="terminerConsultation()">Terminer la consultation</button>
+                    </div>
                 `;
-                phase.appendChild(colTerminer);
+                
+                // On déplace le conteneur créé à l'intérieur du panneau bleu nuit global
+                panel.appendChild(container);
             }
 
             function selectionner(domaine, valeur, btn) {
@@ -181,7 +473,7 @@
 
                 let zone = document.getElementById('zone-prediction');
                 if (json && json.succes && json.prediction) {
-                    zone.innerHTML = '<strong>Prédiction :</strong><br>' + json.prediction.join('<br>');
+                    zone.innerHTML = json.prediction.join('<br><br>');
                 } else {
                     zone.innerHTML = '<em>Impossible d\'obtenir une prédiction.</em>';
                 }
@@ -202,9 +494,10 @@
                 }
             }
 
-            window.onload = chargerMaConsultation;
+            window.onload = function() {
+                afficherHeader();
+                chargerMaConsultation();
+            };
         </script>
     </body>
 </html>
-
-

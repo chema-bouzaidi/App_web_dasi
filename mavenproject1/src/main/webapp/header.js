@@ -1,7 +1,3 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
- */
 async function afficherHeader() {
     let url = './ActionServlet?todo=get-statut';
     let jsonResponse = await fetch(url)
@@ -32,10 +28,10 @@ async function afficherHeader() {
     } else if (statut === "employe") {
         nav.innerHTML = `
             <div class="nav-gauche">
-                <a href="accueil.html">Accueil</a>
-                <a href="AccueilEmp.html">Ma consultation</a>
-                <a href="statistiques.html">Statistiques</a>
-                <a href="carteclients.html">Carte client</a>
+                <a href="AccueilEmp.html">Accueil</a>
+                <a href="MaConsultation.html">Ma Consultation</a>
+                <a href="Statistiques.html">Statistiques</a>
+                <a href="CarteClients.html">Carte Client</a>
             </div>
             <div class="nav-droite">
                 <a onclick="deconnecter()">Deconnexion</a>
@@ -57,4 +53,3 @@ async function deconnecter() {
     await fetch('./ActionServlet?todo=deconnecter');
     window.location.href = "accueil.html";
 }
-
