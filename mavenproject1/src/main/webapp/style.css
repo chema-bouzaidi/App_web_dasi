@@ -1,0 +1,70 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 20 mai 2026, 11:55:31
+    Author     : cbouzaidi
+*/
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1b4b;
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+nav {
+    background-color: #0d1b4b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 7px 14px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+nav a:hover { background-color: rgba(255,255,255,0.15); }
+
+.nav-gauche, .nav-droite { display: flex; gap: 10px; }
+
+footer {
+    background-color: #0d1b4b;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 30px;
+    color: #ccd6f6;
+    font-size: 12px;
+}
+
+.btn {
+    background-color: #7c4dff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+h1 {
+    font-family: Georgia, serif;
+    font-style: italic;
+    -webkit-text-stroke: 1px #666666;
+}
+
+.btn:hover { background-color: #6200ea; }
+

@@ -5,111 +5,201 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <link rel="stylesheet" href="style.css">
+        <title> Inscription </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .contenu {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 40px 20px;
+            }
+
+            .formulaire {
+                background-color: rgba(255,255,255,0.15);
+                padding: 40px;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+
+            .colonnes {
+                display: flex;
+                gap: 40px;
+            }
+
+            .champ {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            label {
+                width: 160px;
+                text-align: right;
+                margin-right: 10px;
+                font-size: 14px;
+            }
+
+            input {
+                background-color: rgba(255,255,255,0.1);
+                border: none;
+                border-radius: 5px;
+                padding: 8px;
+                color: white;
+                width: 180px;
+            }
+
+            .mdp-container {
+                position: relative;
+                display: inline-block;
+            }
+
+            .mdp-container span {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+        </style>
+
     </head>
     <body>
-        <h1> Inscription </h1>
-        <div style="display: flex; gap: 40px;">
+        <nav id="header"></nav>
 
-            <div>
-                <div>
-                    <label for="nom">Nom :</label>
-                    <input id="nom" type="text"/>
-                </div>
-                <div>
-                    <label for="prenom">Prénom :</label>
-                    <input id="prenom" type="text"/>
-                </div>
-                <div>
-                    <label for="dateNaissance">Date naissance :</label>
-                    <input id="dateNaissance" type="date"/>
-                </div>
-                <div>
-                    <label for="adresse">Adresse postale :</label>
-                    <input id="adresse" type="text"/>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <label for="telephone">Téléphone :</label>
-                    <input id="telephone" type="tel"/>
-                </div>
-                <div>
-                    <label for="mail">Mail :</label>
-                    <input id="mail" type="email"/>
-                </div>
-                <div>
-                    <label for="mdp">Mot de passe :</label>
-                    <input id="mdp" type="password"/>
-                    <span onclick="CacherMdp('mdp')">👁</span>
-                </div>
-                <div>
-                    <label for="mdp2">Valider mot de passe :</label>
-                    <input id="mdp2" type="password"/>
-                    <span onclick="CacherMdp('mdp2')">👁</span>
+        <div class="contenu">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <h1>Inscription</h1>
+                <div class="formulaire">
+
+                    <div class="colonnes">
+                        <div>
+                            <div class="champ">
+                                <label for="nom">Nom :</label>
+                                <input id="nom" type="text"/>
+                            </div>
+                            <div class="champ">
+                                <label for="prenom">Prénom :</label>
+                                <input id="prenom" type="text"/>
+                            </div>
+                            <div class="champ">
+                                <label for="dateNaissance">Date naissance :</label>
+                                <input id="dateNaissance" type="date"/>
+                            </div>
+                            <div class="champ">
+                                <label for="adresse">Adresse postale :</label>
+                                <input id="adresse" type="text"/>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="champ">
+                                <label for="telephone">Téléphone :</label>
+                                <input id="telephone" type="tel"/>
+                            </div>
+                            <div class="champ">
+                                <label for="mail">Mail :</label>
+                                <input id="mail" type="email"/>
+                            </div>
+                            <div class="champ">
+                                <label for="mdp">Mot de passe :</label>
+                                <div class="mdp-container">
+                                    <input id="mdp" type="password"/>
+                                    <span onclick="CacherMdp('mdp')">👁</span>
+                                </div>
+                            </div>
+                            <div class="champ">
+                                <label for="mdp2">Valider mot de passe :</label>
+                                <div class="mdp-container">
+                                    <input id="mdp2" type="password"/>
+                                    <span onclick="CacherMdp('mdp2')">👁</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn" onclick="Inscrire()">Inscription</button>
                 </div>
             </div>
         </div>
-        <button onclick="Inscrire()">Inscription</button>
-        <script>
-             function initPage() {
-                console.log("Initialisation de la page");
 
-            }
-            ;
-            function CacherMdp(id) {
-                let input = document.getElementById(id);
-                if (input.type === "password") {
-                    input.type = "text";
-                } else {
-                    input.type = "password";
-                }
-            }
-            async function Inscrire() {
-                console.log("Appel de l'Action: InscrireClient");
-                let mdp = document.getElementById("mdp").value;
-                let mdp2 = document.getElementById("mdp2").value;
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+        <script src="header.js"></script>
+        <script >
+                    function initPage() {
+                        console.log("Initialisation de la page");
 
-                if (mdp !== mdp2) {
-                    alert("Les mots de passe ne correspondent pas");
-                    return;
-                }
-                
-                let params = {
-                    nom: document.getElementById("nom").value,
-                    prenom: document.getElementById("prenom").value,
-                    dateNaissance: document.getElementById("dateNaissance").value,
-                    adresse: document.getElementById("adresse").value,
-                    telephone: document.getElementById("telephone").value,
-                    mail: document.getElementById("mail").value,
-                    mdp: mdp
-                };
-                let url = `./ActionServlet?todo=inscrire-client`;
-                let options = {method: 'POST', body: new URLSearchParams(params)};
-                let jsonResponse = await fetch(url, options)
-                        .then((httpResponse) => {
-                            if (!httpResponse.ok) {
-                                throw 'HTTP Error ' + httpResponse.status;
-                            }
-                            return httpResponse.json();
-                        })
-                        .catch((error) => {
-                            console.log('[AJAX ERROR]', error);
-                            return null;
-                        });
-                console.log(jsonResponse);
-                if (jsonResponse.succes) {
-                    window.location.href = "index.html";
-                } else {
-                    alert("L'inscription a échoué, veuillez vérifier votre adresse-mail et réessayez");
-                }
+                    }
+                    ;
+                    function CacherMdp(id) {
+                        let input = document.getElementById(id);
+                        if (input.type === "password") {
+                            input.type = "text";
+                        } else {
+                            input.type = "password";
+                        }
+                    }
+                    async function Inscrire() {
+                        console.log("Appel de l'Action: InscrireClient");
+                        let mdp = document.getElementById("mdp").value;
+                        let mdp2 = document.getElementById("mdp2").value;
+
+                        if (mdp !== mdp2) {
+                            alert("Les mots de passe ne correspondent pas");
+                            return;
+                        }
+
+                        let params = {
+                            nom: document.getElementById("nom").value,
+                            prenom: document.getElementById("prenom").value,
+                            dateNaissance: document.getElementById("dateNaissance").value,
+                            adresse: document.getElementById("adresse").value,
+                            telephone: document.getElementById("telephone").value,
+                            mail: document.getElementById("mail").value,
+                            mdp: mdp
+                        };
+                        let url = `./ActionServlet?todo=inscrire-client`;
+                        let options = {method: 'POST', body: new URLSearchParams(params)};
+                        let jsonResponse = await fetch(url, options)
+                                .then((httpResponse) => {
+                                    if (!httpResponse.ok) {
+                                        throw 'HTTP Error ' + httpResponse.status;
+                                    }
+                                    return httpResponse.json();
+                                })
+                                .catch((error) => {
+                                    console.log('[AJAX ERROR]', error);
+                                    return null;
+                                });
+                        console.log(jsonResponse);
+                        if (jsonResponse.succes) {
+                            window.location.href = "inscription.html";
+                        } else {
+                            alert("L'inscription a échoué, veuillez vérifier votre adresse-mail et réessayez");
+                        }
 
 
 
-            }
-            window.onload = initPage;
+                    }
+                    window.onload = function () {
+                        initPage();
+                        afficherHeader();
+                    };
         </script>
+
+
     </body>
 </html>

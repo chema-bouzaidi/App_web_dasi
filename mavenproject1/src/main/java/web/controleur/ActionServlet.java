@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import web.modele.AuthentifierAction;
+import web.modele.DeconnecterAction;
+import web.modele.GetStatutAction;
 import web.modele.InscrireClientAction;
 import web.modele.ObtenirPredictionAction;
 import web.modele.PrendreRdvAction;
@@ -81,20 +83,20 @@ public class ActionServlet extends HttpServlet {
             }
             case "acceder-profil-astral": {
                 new RecupClientAction().execute(request);
-                new ClientSerialisation().appliquer(request,response);
-                
+                new ClientSerialisation().appliquer(request, response);
+
             }
             case "historique-consultations": {
                 new RecupClientAction().execute(request);
-                new ClientSerialisation().appliquer(request,response);
+                new ClientSerialisation().appliquer(request, response);
                 break;
-                
+
             }
             case "prendre-rdv": {
                 new PrendreRdvAction().execute(request);
-                new SuccesSerialisation().appliquer(request,response);
+                new SuccesSerialisation().appliquer(request, response);
                 break;
-                
+
             }
             case "ma-consultation": {
                 new RecupConsultationActuelleEmployeAction().execute(request);
@@ -127,7 +129,16 @@ public class ActionServlet extends HttpServlet {
                 new CarteClientsSerialisation().appliquer(request, response);
                 break;
             }
-            
+            case "get-statut": {
+                new GetStatutAction().execute(request);
+                new AuthentifierSerialisation().appliquer(request, response);
+                break;
+            }
+            case "deconnecter": {
+                new DeconnecterAction().execute(request);
+                break;
+            }
+
         }
 
     }

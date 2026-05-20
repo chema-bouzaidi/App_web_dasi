@@ -8,11 +8,13 @@ web\modele\RecupererListeMediumsAction.class
 web\vue\CarteClientsSerialisation.class
 web\modele\ObtenirPredictionAction.class
 web\vue\Serialisation.class
+web\modele\GetStatutAction.class
 web\modele\InscrireClientAction.class
 web\vue\ConsultationEmployeSerialisation.class
 web\vue\PredictionSerialisation.class
 web\modele\AuthentifierAction.class
 web\modele\RecupCarteClientsAction.class
+web\modele\DeconnecterAction.class
 web\modele\RecupClientAction.class
 web\modele\RecupStatistiquesAction.class
 web\modele\PrendreRdvAction.class

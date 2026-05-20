@@ -7,103 +7,85 @@
     </head>
     <body>
         <h1>Mediums</h1>
-
-        <a href="index.html">lien vers index</a>
+        
+        <a href="connexion.html">lien vers connexion</a>
         <ul id="liste-mediums">           
         </ul>
-
+        
         <script>
             function initPage() {
                 console.log("Initialisation de la page");
                 listerMediums();
-            }
-            ;
-
+            };
+            
             async function listerMediums() {
                 console.log("Appel de l'Action: Consulter liste mediums");
                 let url = './ActionServlet?todo=consulter-liste-mediums'; // TODO : appeler l'ActionServlet pour lister les demandes
                 let jsonResponse = await fetch(url)
                         .then(
-                                function (httpResponse) {
-                                    return httpResponse.json();
-                                }
+                            function(httpResponse) {
+                                return httpResponse.json();
+                            }
                         )
                         .catch(
-                                function (error) {
-                                    console.log(error);
-                                    return null;
-                                }
+                            function(error) {
+                                console.log(error);
+                                return null;
+                            }
                         );
                 console.log(jsonResponse);
                 if (jsonResponse) {
                     console.log('Affichage de la liste de mediums');
-                    let ul = document.getElementById("liste-mediums");
-                    for (let medium of jsonResponse.mediums) {
+                    let ul=document.getElementById("liste-mediums");
+                    for ( let medium of jsonResponse.mediums){
                         console.log(medium);
-                        let li = document.createElement('li');
-                        li.appendChild(document.createTextNode(medium.denomination + " : " + medium.type));
-                        let btnDerouler = document.createElement('button');
-                        btnDerouler.textContent = '>';
-                        let divInfos = document.createElement('div');
-                        divInfos.style.display = 'none';
-                        divInfos.appendChild(document.createTextNode(medium.presentation));
-                        let button = document.createElement('button');
-                        button.textContent = "Prendre rendez-vous";
-                        button.onclick = function () {
+                        let li= document.createElement('li');
+                        let button=document.createElement('button');
+                        button.textContent="Prendre rendez-vous";
+                        button.onclick=function(){
                             prendrerdv(medium.id);
-
+                            
                         }
-                        divInfos.appendChild(button);
-                        btnDerouler.onclick = function () {
-                            if (divInfos.style.display === 'none') {
-                                divInfos.style.display = 'block';
-                                btnDerouler.textContent = 'v';
-                            } else {
-                                divInfos.style.display = 'none';
-                                btnDerouler.textContent = '>';
-                            }
-                        };
-                        li.appendChild(btnDerouler);
-                        li.appendChild(divInfos);
+                        li.appendChild(button);
+                        let content= medium.denomination+ ":"+ medium.type+ " commentaire " + medium.presentation;
+                        li.appendChild(document.createTextNode(content));
                         ul.appendChild(li);
-
-
-                        ul.appendChild(li);
-
-
+                      
+                    
                     }
                 }
             }
-
-            async function prendrerdv(idMedium) {
+            
+            async function prendrerdv( idMedium){
                 console.log("Appel de l'Action: Prendre rdv");
                 let url = `./ActionServlet?todo=prendre-rdv&idMedium=${idMedium}`; // TODO : appeler l'ActionServlet pour lister les demandes
                 let jsonResponse = await fetch(url)
                         .then(
-                                function (httpResponse) {
-                                    return httpResponse.json();
-                                }
+                            function(httpResponse) {
+                                return httpResponse.json();
+                            }
                         )
                         .catch(
-                                function (error) {
-                                    console.log(error);
-                                    return null;
-                                }
+                            function(error) {
+                                console.log(error);
+                                return null;
+                            }
                         );
                 if (jsonResponse) {
                     console.log('Affichage de la prise de rdv');
-                    if (jsonResponse.succes) {
+                    if (jsonResponse.succes){
                         alert("Votre consultation a été demandée");
-                    } else {
+                    }
+                    else{
                         alert("Réessayez plus tard");
                     }
-
-
-
+                      
+                    
+                    
                 }
             }
-
-
+            
+            
             window.onload = initPage;
         </script>
     </body>

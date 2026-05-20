@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Connexion</title>
+        <link rel="stylesheet" href="style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            .contenu {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .formulaire {
+                background-color: rgba(255,255,255,0.15);
+                padding: 40px;
+                border-radius: 10px;
+                width: 350px;
+                text-align: center;
+            }
+
+           
+
+            .champ {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            label {
+                width: 130px;
+                text-align: right;
+                margin-right: 10px;
+                font-size: 14px;
+            }
+
+            input {
+                background-color: rgba(255,255,255,0.1);
+                border: none;
+                border-radius: 5px;
+                padding: 8px;
+                color: white;
+                width: 170px;
+            }
+
+            .mdp-container {
+                position: relative;
+                display: inline-block;
+            }
+
+            .mdp-container span {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+
+            .lien {
+                color: #ccd6f6;
+                margin-top: 15px;
+                cursor: pointer;
+                font-size: 13px;
+            }
+            .lien:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <nav id="header"></nav>
+
+        <div class="contenu">
+            <div class="formulaire">
+                <h1>Connexion</h1>
+
+                <div class="champ">
+                    <label for="mail">Adresse mail :</label>
+                    <input id="mail" type="email" placeholder="mon_adresse@insa-lyon.fr"/>
+                </div>
+
+                <div class="champ">
+                    <label for="mdp">Mot de passe :</label>
+                    <div class="mdp-container">
+                        <input id="mdp" type="password" placeholder="M0t_d3_P4ss3!"/>
+                        <span onclick="CacherMdp('mdp')">👁</span>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="Authentifier()">Connexion</button>
+                <p class="lien" onclick="window.location.href = 'Inscription.html'">Pas encore de compte ?</p>
+            </div>
+        </div>
+
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+        <script src="header.js"></script>
+        <script >
+                    function initPage() {
+                        console.log("Initialisation de la page");
+
+                    }
+                    ;
+                    function CacherMdp(id) {
+                        let input = document.getElementById(id);
+                        if (input.type === "password") {
+                            input.type = "text";
+                        } else {
+                            input.type = "password";
+                        }
+                    }
+
+                    async function Authentifier() {
+                        let Mail = document.getElementById("mail").value;
+                        let Mdp = document.getElementById("mdp").value;
+                        console.log("Appel de l'Action: Authentifier");
+                        let url = `./ActionServlet?todo=authentifier&mail=${Mail}&mdp=${Mdp}`; // TODO : appeler l'ActionServlet pour lister les demandes
+
+                        let jsonResponse = await fetch(url)
+                                .then(
+                                        function (httpResponse) {
+                                            return httpResponse.json();
+                                        }
+                                )
+                                .catch(
+                                        function (error) {
+                                            console.log(error);
+                                            return null;
+                                        }
+                                );
+
+                        console.log(jsonResponse);
+                        if (jsonResponse) {
+                            console.log('Authentification');
+                            console.log(jsonResponse);
+                            if (jsonResponse.statut === "client") {
+                                window.location.href = "AccueilClient.html";
+                            } else if (jsonResponse.statut === "employe") {
+                                window.location.href = "AccueilEmp.html";
+                            } else {
+                                alert("Veuillez réessayer en vérifiant mail et mdp");
+                            }
+
+
+                        }
+
+                    }
+                    window.onload = function () {
+                        initPage();
+                        afficherHeader();
+                    };
+        </script>
+    </body>
+</html>
+
