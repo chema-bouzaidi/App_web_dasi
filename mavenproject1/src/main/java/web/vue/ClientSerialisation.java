@@ -35,7 +35,8 @@ public class ClientSerialisation extends Serialisation {
          for (Consultation consultation : liste_consultations) {
             JsonObjectBuilder jsonConsultation = Json.createObjectBuilder();
             jsonConsultation.add("medium",consultation.getMedium().getDenomination());
-            jsonConsultation.add("date",consultation.getDateFin().toString());
+            String date = consultation.getDateFin() != null ? consultation.getDateFin().toString() : "En cours";
+            jsonConsultation.add("date",date);
             jsonHistorique.add(jsonConsultation);}
             
        

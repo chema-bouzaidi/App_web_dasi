@@ -77,11 +77,13 @@ public class ActionServlet extends HttpServlet {
             case "historique-consultations": {
                 new RecupClientAction().execute(request);
                 new ClientSerialisation().appliquer(request,response);
+                break;
                 
             }
             case "prendre-rdv": {
                 new PrendreRdvAction().execute(request);
                 new SuccesSerialisation().appliquer(request,response);
+                break;
                 
             }
             
