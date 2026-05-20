@@ -12,7 +12,9 @@ web\vue\ConsultationEmployeSerialisation.class
 web\vue\PredictionSerialisation.class
 web\modele\AuthentifierAction.class
 web\modele\RecupClientAction.class
+web\modele\RecupStatistiquesAction.class
 web\modele\PrendreRdvAction.class
 web\modele\RecupConsultationActuelleEmployeAction.class
+web\vue\StatistiquesSerialisation.class
 web\modele\SeMettrePretAction.class
 web\vue\ListeMediumsSerialisation.class

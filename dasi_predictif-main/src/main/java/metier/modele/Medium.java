@@ -38,6 +38,11 @@ abstract public class Medium {
     public void augmenterNbConsultations(){
         this.nbConsultations++;
     }
+
+    public Integer getNbConsultations() {
+        return nbConsultations;
+    }
+    
     
     @Override
     public String toString() {

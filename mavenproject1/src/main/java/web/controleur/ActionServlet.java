@@ -17,6 +17,7 @@ import web.modele.ObtenirPredictionAction;
 import web.modele.PrendreRdvAction;
 import web.modele.RecupClientAction;
 import web.modele.RecupConsultationActuelleEmployeAction;
+import web.modele.RecupStatistiquesAction;
 import web.modele.RecupererListeMediumsAction;
 import web.modele.SeMettrePretAction;
 import web.modele.TerminerConsultationAction;
@@ -25,6 +26,7 @@ import web.vue.ListeMediumsSerialisation;
 import web.vue.ClientSerialisation;
 import web.vue.ConsultationEmployeSerialisation;
 import web.vue.PredictionSerialisation;
+import web.vue.StatistiquesSerialisation;
 import web.vue.SuccesSerialisation;
 
 /**
@@ -113,7 +115,11 @@ public class ActionServlet extends HttpServlet {
                 break;
             }
 
-
+            case "statistiques": {
+                new RecupStatistiquesAction().execute(request);
+                new StatistiquesSerialisation().appliquer(request, response);
+                break;
+}
             
         }
 

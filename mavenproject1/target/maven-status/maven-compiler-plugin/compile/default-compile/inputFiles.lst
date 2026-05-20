@@ -9,6 +9,7 @@ C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\controleur\Act
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\PrendreRdvAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupererListeMediumsAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\ClientSerialisation.java
+C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupStatistiquesAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\InscrireClientAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\TerminerConsultationAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\SeMettrePretAction.java
@@ -16,3 +17,4 @@ C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\Consultati
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\modele\RecupClientAction.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\SuccesSerialisation.java
 C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\Serialisation.java
+C:\Temp\3IF-DASI\dasi-front-chema\mavenproject1\src\main\java\web\vue\StatistiquesSerialisation.java
