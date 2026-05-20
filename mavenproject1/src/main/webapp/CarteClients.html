@@ -4,11 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Carte clients</title>
+        <link rel="stylesheet" href="style.css">
         <style>
-            body { font-family: sans-serif; margin: 0; padding: 20px; box-sizing: border-box; }
-            a { font-size: 13px; color: #555; }
-            h1 { font-size: 22px; font-weight: 500; margin: 12px 0 16px; }
-
             .layout {
                 display: flex;
                 gap: 24px;
@@ -24,85 +21,159 @@
                 flex: 1;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-start;
                 padding: 30px;
-                border: 1px solid #e0e0e0;
+                border: 1px solid rgba(255,255,255,0.2);
                 border-radius: 8px;
-                background: #fff;
+                background: rgba(255,255,255,0.1);
+                overflow-y: auto;
+
             }
 
             #profil h2 {
                 font-size: 20px;
                 font-weight: 500;
                 margin: 0 0 24px;
-            }
-
-            #profil .vide {
-                color: #aaa;
-                font-size: 14px;
-                text-align: center;
+                color: white;
             }
 
             .champ {
                 display: flex;
                 align-items: flex-start;
-                margin-bottom: 16px;
+                margin-bottom: 12px;
                 font-size: 14px;
             }
 
-            .champ .clé { color: #777; min-width: 140px; font-weight: 500; }
-            .champ .valeur { color: #222; }
+            .champ .cle {
+                color: #ccd6f6;
+                min-width: 100px;
+                font-weight: 500;
+            }
+
+            .champ .valeur {
+                color: white;
+            }
+
+            .client-bloc {
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+                margin-bottom: 16px;
+                padding-bottom: 16px;
+            }
+
+            .client-bloc:last-child {
+                border-bottom: none;
+            }
+
+            .vide {
+                color: #ccd6f6;
+                font-size: 14px;
+                text-align: center;
+            }
         </style>
     </head>
     <body>
-        <h1>Carte des clients</h1>
+        <nav id="header"></nav>
 
-        <div class="layout">
-            <div id="map"></div>
-            <div id="profil">
+        <div style="padding: 20px;">
+            <h1>Carte des clients</h1>
+
+            <div class="layout">
+                <div id="map"></div>
+                <div style="display: flex; flex-direction: column; max-height: calc(100vh - 160px); overflow: hidden;">
+                    <h2>Profil du client</h2>
+                    <div id="profil">
+                        <p class="vide">Cliquez sur un marqueur pour voir le profil</p>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+        <script src="header.js"></script>
         <script>
             var googleMapInstance = null;
 
             function initMap() {
                 googleMapInstance = new google.maps.Map(document.getElementById('map'), {
-                    center: { lat: 46.8, lng: 2.3 },
+                    center: {lat: 46.8, lng: 2.3},
                     zoom: 6
                 });
                 chargerClients();
             }
 
-            function afficherProfil(c) {
-                document.getElementById('profil').innerHTML =
-                    '<h2>Profil du client</h2>' +
-                    '<div class="champ"><span class="clé">Adresse postale :</span><span class="valeur">' + (c.adresse || '—') + '</span></div>' +
-                    '<div class="champ"><span class="clé">Nom :</span><span class="valeur">' + (c.nom || '—') + '</span></div>' +
-                    '<div class="champ"><span class="clé">Prénom :</span><span class="valeur">' + (c.prenom || '—') + '</span></div>';
+            function afficherProfils(clients) {
+                let html = '';
+                for (let c of clients) {
+                    html += '<div class="client-bloc">';
+                    html += '<div class="champ"><span class="cle">Nom :</span><span class="valeur">' + (c.nom || '—') + '</span></div>';
+                    html += '<div class="champ"><span class="cle">Prénom :</span><span class="valeur">' + (c.prenom || '—') + '</span></div>';
+                    html += '<div class="champ"><span class="cle">Adresse :</span><span class="valeur">' + (c.adresse || '—') + '</span></div>';
+                    html += '</div>';
+                }
+                document.getElementById('profil').innerHTML = html;
             }
 
             async function chargerClients() {
                 let json = await fetch('./ActionServlet?todo=carteclients')
-                    .then(r => { if (!r.ok) throw r.status; return r.json(); })
-                    .catch(e => { console.log(e); return null; });
-
-                if (!json) return;
-
-                for (let c of json.clients) {
-                    if (c.latitude && c.longitude) {
-                        let marker = new google.maps.Marker({
-                            map: googleMapInstance,
-                            position: { lat: c.latitude, lng: c.longitude },
-                            title: c.prenom + ' ' + c.nom
+                        .then(r => {
+                            if (!r.ok)
+                                throw r.status;
+                            return r.json();
+                        })
+                        .catch(e => {
+                            console.log(e);
+                            return null;
                         });
 
-                        marker.addListener('click', (function(client) {
-                            return function() { afficherProfil(client); };
-                        })(c));
+                if (!json)
+                    return;
+
+                
+                let groupes = {};
+                for (let c of json.clients) {
+                    if (c.latitude && c.longitude) {
+                        let cle = c.latitude + ',' + c.longitude;
+                        if (!groupes[cle])
+                            groupes[cle] = [];
+                        groupes[cle].push(c);
                     }
                 }
+
+               
+                for (let cle in groupes) {
+                    let clients = groupes[cle];
+                    let [lat, lng] = cle.split(',').map(Number);
+
+                    let marker = new google.maps.Marker({
+                        map: googleMapInstance,
+                        position: {lat: lat, lng: lng},
+                        title: clients.length + ' client(s)'
+                    });
+
+                    marker.addListener('click', (function (groupe) {
+                        return function () {
+                            afficherProfils(groupe);
+                            document.getElementById('profil').scrollTop = 0;
+                        };
+                    })(clients));
+                }
             }
+
+            window.onload = function () {
+                afficherHeader();
+            };
         </script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhf3JleYpal9S-xouJYH8lf7Dvz5Y2Nko&callback=initMap"></script>
     </body>

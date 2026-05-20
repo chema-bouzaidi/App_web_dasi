@@ -34,8 +34,8 @@ public class CarteClientsSerialisation extends Serialisation {
                     o.add("prenom", c.getPrenom() != null ? c.getPrenom() : "");
                     o.add("adresse", c.getAdresse() != null ? c.getAdresse() : "");
                     try {
-                        o.add("latitude", Double.parseDouble(gps.get(0)));
-                        o.add("longitude", Double.parseDouble(gps.get(1)));
+                        o.add("latitude", Double.parseDouble(gps.get(1)));
+                        o.add("longitude", Double.parseDouble(gps.get(0)));
                         jsonClients.add(o);
                     } catch (NumberFormatException e) {
                         System.out.println("GPS invalide pour client " + c.getNom());

@@ -1,92 +1,204 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Demandes</title>
+        <title>Liste des médiums</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .contenu {
+                padding: 30px;
+                flex: 1;
+            }
+
+            .medium-item {
+                background-color: rgba(255,255,255,0.1);
+                border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 8px;
+                margin-bottom: 10px;
+                overflow: hidden;
+            }
+
+            .medium-header {
+                display: flex;
+                align-items: center;
+                padding: 12px 20px;
+                cursor: pointer;
+                gap: 15px;
+            }
+
+            .medium-avatar {
+                width: 35px;
+                height: 35px;
+                border-radius: 50%;
+                background-color: rgba(255,255,255,0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+            }
+
+            .medium-nom {
+                flex: 1;
+                font-weight: 500;
+            }
+
+            .medium-type {
+                color: #ccd6f6;
+                font-size: 14px;
+                flex: 1;
+            }
+
+            .btn-derouler {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            .medium-details {
+                display: none;
+                padding: 15px 20px 20px 70px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+                color: #ccd6f6;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .btn-rdv {
+                background-color: #7c4dff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 20px;
+                cursor: pointer;
+                margin-top: 12px;
+                font-size: 14px;
+            }
+
+            .btn-rdv:hover { background-color: #6200ea; }
+        </style>
     </head>
     <body>
-        <h1>Mediums</h1>
-        
-        <a href="connexion.html">lien vers connexion</a>
-        <ul id="liste-mediums">           
-        </ul>
-        
+        <nav id="header"></nav>
+
+        <div class="contenu">
+            <h1>Liste médiums</h1>
+            <div id="liste-mediums"></div>
+        </div>
+
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+        <script src="header.js"></script>
         <script>
-            function initPage() {
-                console.log("Initialisation de la page");
-                listerMediums();
-            };
-            
             async function listerMediums() {
                 console.log("Appel de l'Action: Consulter liste mediums");
-                let url = './ActionServlet?todo=consulter-liste-mediums'; // TODO : appeler l'ActionServlet pour lister les demandes
+                let url = './ActionServlet?todo=consulter-liste-mediums';
                 let jsonResponse = await fetch(url)
-                        .then(
-                            function(httpResponse) {
-                                return httpResponse.json();
-                            }
-                        )
-                        .catch(
-                            function(error) {
-                                console.log(error);
-                                return null;
-                            }
-                        );
+                    .then((httpResponse) => {
+                        if (!httpResponse.ok) throw 'HTTP Error ' + httpResponse.status;
+                        return httpResponse.json();
+                    })
+                    .catch((error) => { console.log(error); return null; });
+
                 console.log(jsonResponse);
+
                 if (jsonResponse) {
-                    console.log('Affichage de la liste de mediums');
-                    let ul=document.getElementById("liste-mediums");
-                    for ( let medium of jsonResponse.mediums){
-                        console.log(medium);
-                        let li= document.createElement('li');
-                        let button=document.createElement('button');
-                        button.textContent="Prendre rendez-vous";
-                        button.onclick=function(){
-                            prendrerdv(medium.id);
-                            
-                        }
-                        li.appendChild(button);
-                        let content= medium.denomination+ ":"+ medium.type+ " commentaire " + medium.presentation;
-                        li.appendChild(document.createTextNode(content));
-                        ul.appendChild(li);
-                      
-                    
+                    let liste = document.getElementById("liste-mediums");
+                    for (let medium of jsonResponse.mediums) {
+                        let div = document.createElement('div');
+                        div.className = 'medium-item';
+
+                        // Header cliquable
+                        let header = document.createElement('div');
+                        header.className = 'medium-header';
+
+                        let avatar = document.createElement('div');
+                        avatar.className = 'medium-avatar';
+                        avatar.textContent = '👤';
+
+                        let nom = document.createElement('span');
+                        nom.className = 'medium-nom';
+                        nom.textContent = medium.denomination;
+
+                        let type = document.createElement('span');
+                        type.className = 'medium-type';
+                        type.textContent = medium.type;
+
+                        let btnDerouler = document.createElement('button');
+                        btnDerouler.className = 'btn-derouler';
+                        btnDerouler.textContent = '>';
+
+                        // Details cachés
+                        let details = document.createElement('div');
+                        details.className = 'medium-details';
+                        details.textContent = medium.presentation;
+
+                        let btnRdv = document.createElement('button');
+                        btnRdv.className = 'btn-rdv';
+                        btnRdv.textContent = 'Prendre rendez-vous';
+                        btnRdv.onclick = function() { prendrerdv(medium.id); };
+
+                        details.appendChild(document.createElement('br'));
+                        details.appendChild(btnRdv);
+
+                        // Logique dérouler
+                        header.onclick = function() {
+                            if (details.style.display === 'none' || details.style.display === '') {
+                                details.style.display = 'block';
+                                btnDerouler.textContent = 'v';
+                            } else {
+                                details.style.display = 'none';
+                                btnDerouler.textContent = '>';
+                            }
+                        };
+
+                        header.appendChild(avatar);
+                        header.appendChild(nom);
+                        header.appendChild(type);
+                        header.appendChild(btnDerouler);
+                        div.appendChild(header);
+                        div.appendChild(details);
+                        liste.appendChild(div);
                     }
                 }
             }
-            
-            async function prendrerdv( idMedium){
+
+            async function prendrerdv(idMedium) {
                 console.log("Appel de l'Action: Prendre rdv");
-                let url = `./ActionServlet?todo=prendre-rdv&idMedium=${idMedium}`; // TODO : appeler l'ActionServlet pour lister les demandes
+                let url = `./ActionServlet?todo=prendre-rdv&idMedium=${idMedium}`;
                 let jsonResponse = await fetch(url)
-                        .then(
-                            function(httpResponse) {
-                                return httpResponse.json();
-                            }
-                        )
-                        .catch(
-                            function(error) {
-                                console.log(error);
-                                return null;
-                            }
-                        );
+                    .then((httpResponse) => {
+                        if (!httpResponse.ok) throw 'HTTP Error ' + httpResponse.status;
+                        return httpResponse.json();
+                    })
+                    .catch((error) => { console.log(error); return null; });
+
                 if (jsonResponse) {
-                    console.log('Affichage de la prise de rdv');
-                    if (jsonResponse.succes){
-                        alert("Votre consultation a été demandée");
+                    if (jsonResponse.succes) {
+                        alert("Votre consultation a été demandée !");
+                    } else {
+                        alert("Aucun employé disponible, réessayez plus tard");
                     }
-                    else{
-                        alert("Réessayez plus tard");
-                    }
-                      
-                    
-                    
                 }
             }
-            
-            
-            window.onload = initPage;
+
+            window.onload = function() {
+                afficherHeader();
+                listerMediums();
+            };
         </script>
     </body>
 </html>
