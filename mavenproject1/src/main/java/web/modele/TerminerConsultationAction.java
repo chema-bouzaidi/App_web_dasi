@@ -16,19 +16,19 @@ public class TerminerConsultationAction extends Action {
     public void execute(HttpServletRequest req) {
         System.out.println("\nTerminerConsultationAction -------");
         HttpSession session = req.getSession();
-        if ("employe".equals(session.getAttribute("statut"))) {
-            Integer idEmploye = (Integer) session.getAttribute("id");
-            Employe employe = Service.recupererEmployeParId(idEmploye);
-            if (employe != null) {
-                Consultation consultation = Service.recupererConsultationActuelleEmploye(employe);
-                if (consultation != null) {
-                    String commentaire = req.getParameter("commentaire");
-                    Boolean ok = Service.terminerConsultation(consultation, commentaire);
-                    req.setAttribute("succes", ok);
-                    return;
-                }
+
+        Integer idEmploye = (Integer) session.getAttribute("id");
+        Employe employe = Service.recupererEmployeParId(idEmploye);
+        if (employe != null) {
+            Consultation consultation = Service.recupererConsultationActuelleEmploye(employe);
+            if (consultation != null) {
+                String commentaire = req.getParameter("commentaire");
+                Boolean ok = Service.terminerConsultation(consultation, commentaire);
+                req.setAttribute("succes", ok);
+                return;
             }
         }
+
         req.setAttribute("succes", false);
     }
 }

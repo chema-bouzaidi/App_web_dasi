@@ -21,14 +21,13 @@ public class PrendreRdvAction extends Action {
     public void execute(HttpServletRequest req) {
         System.out.println("\nprendre rdv  ------- ");
         HttpSession session = req.getSession();
-        if (session.getAttribute("statut").equals("client")) {
-            Integer idClient = (Integer) session.getAttribute("id");
-            Integer idMedium = Integer.parseInt(req.getParameter("idMedium"));
-            Client client = Service.recupererClientParId(idClient);
-            Medium medium = Service.recupererMediumParId(idMedium);
-            Consultation consultation = Service.demanderConsultation(client, medium);
-            req.setAttribute("succes", consultation != null);
-        }
+
+        Integer idClient = (Integer) session.getAttribute("id");
+        Integer idMedium = Integer.parseInt(req.getParameter("idMedium"));
+        Client client = Service.recupererClientParId(idClient);
+        Medium medium = Service.recupererMediumParId(idMedium);
+        Consultation consultation = Service.demanderConsultation(client, medium);
+        req.setAttribute("succes", consultation != null);
 
     }
 }

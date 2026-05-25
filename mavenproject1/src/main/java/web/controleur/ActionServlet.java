@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import web.modele.AuthentifierAction;
 import web.modele.DeconnecterAction;
 import web.modele.GetStatutAction;
@@ -65,6 +66,10 @@ public class ActionServlet extends HttpServlet {
             throws ServletException, IOException {
         String todo = request.getParameter("todo");
         System.out.println("Trace : todo = " + todo);
+
+        HttpSession session = request.getSession(false);
+        String statut = (session != null) ? (String) session.getAttribute("statut") : null;
+
         switch (todo) {
             case "consulter-liste-mediums": {
                 new RecupererListeMediumsAction().execute(request);
@@ -81,66 +86,91 @@ public class ActionServlet extends HttpServlet {
                 new SuccesSerialisation().appliquer(request, response);
                 break;
             }
-            case "acceder-profil-astral": {
-                new RecupClientAction().execute(request);
-                new ClientSerialisation().appliquer(request, response);
-
-            }
-            case "historique-consultations": {
-                new RecupClientAction().execute(request);
-                new ClientSerialisation().appliquer(request, response);
-                break;
-
-            }
-            case "prendre-rdv": {
-                new PrendreRdvAction().execute(request);
-                new SuccesSerialisation().appliquer(request, response);
-                break;
-
-            }
-            case "ma-consultation": {
-                new RecupConsultationActuelleEmployeAction().execute(request);
-                new ConsultationEmployeSerialisation().appliquer(request, response);
-                break;
-            }
-            case "se-mettre-pret": {
-                new SeMettrePretAction().execute(request);
-                new SuccesSerialisation().appliquer(request, response);
-                break;
-            }
-            case "obtenir-prediction": {
-                new ObtenirPredictionAction().execute(request);
-                new PredictionSerialisation().appliquer(request, response);
-                break;
-            }
-            case "terminer-consultation": {
-                new TerminerConsultationAction().execute(request);
-                new SuccesSerialisation().appliquer(request, response);
-                break;
-            }
-
-            case "statistiques": {
-                new RecupStatistiquesAction().execute(request);
-                new StatistiquesSerialisation().appliquer(request, response);
-                break;
-            }
-            case "carteclients": {
-                new RecupCarteClientsAction().execute(request);
-                new CarteClientsSerialisation().appliquer(request, response);
-                break;
-            }
             case "get-statut": {
                 new GetStatutAction().execute(request);
                 new AuthentifierSerialisation().appliquer(request, response);
                 break;
             }
+            case "acceder-profil-astral": {
+                if (!"client".equals(statut)) {
+                    break;
+                }
+                new RecupClientAction().execute(request);
+                new ClientSerialisation().appliquer(request, response);
+                break;
+            }
+            case "historique-consultations": {
+                if (!"client".equals(statut)) {
+                    break;
+                }
+                new RecupClientAction().execute(request);
+                new ClientSerialisation().appliquer(request, response);
+                break;
+            }
+            case "prendre-rdv": {
+                if (!"client".equals(statut)) {
+                    break;
+                }
+                new PrendreRdvAction().execute(request);
+                new SuccesSerialisation().appliquer(request, response);
+                break;
+            }
+            case "ma-consultation": {
+                if (!"employe".equals(statut)) {
+                    break;
+                }
+                new RecupConsultationActuelleEmployeAction().execute(request);
+                new ConsultationEmployeSerialisation().appliquer(request, response);
+                break;
+            }
+            case "se-mettre-pret": {
+                if (!"employe".equals(statut)) {
+                    break;
+                }
+                new SeMettrePretAction().execute(request);
+                new SuccesSerialisation().appliquer(request, response);
+                break;
+            }
+            case "obtenir-prediction": {
+                if (!"employe".equals(statut)) {
+                    break;
+                }
+                new ObtenirPredictionAction().execute(request);
+                new PredictionSerialisation().appliquer(request, response);
+                break;
+            }
+            case "terminer-consultation": {
+                if (!"employe".equals(statut)) {
+                    break;
+                }
+                new TerminerConsultationAction().execute(request);
+                new SuccesSerialisation().appliquer(request, response);
+                break;
+            }
+            case "statistiques": {
+                if (!"employe".equals(statut)) {
+                    break;
+                }
+                new RecupStatistiquesAction().execute(request);
+                new StatistiquesSerialisation().appliquer(request, response);
+                break;
+            }
+            case "carteclients": {
+                if (!"employe".equals(statut)) {
+                    break;
+                }
+                new RecupCarteClientsAction().execute(request);
+                new CarteClientsSerialisation().appliquer(request, response);
+                break;
+            }
             case "deconnecter": {
+                if (statut == null) {
+                    break;
+                }
                 new DeconnecterAction().execute(request);
                 break;
             }
-
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

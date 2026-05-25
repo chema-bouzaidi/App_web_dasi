@@ -27,7 +27,6 @@
                 border-radius: 8px;
                 background: rgba(255,255,255,0.1);
                 overflow-y: auto;
-
             }
 
             #profil h2 {
@@ -126,32 +125,34 @@
             }
 
             async function chargerClients() {
-                let json = await fetch('./ActionServlet?todo=carteclients')
-                        .then(r => {
-                            if (!r.ok)
-                                throw r.status;
-                            return r.json();
+                console.log("Appel de l'Action: carteclients");
+                let url = './ActionServlet?todo=carteclients';
+
+                let jsonResponse = await fetch(url)
+                        .then(function(httpResponse) {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
                         })
-                        .catch(e => {
-                            console.log(e);
+                        .catch(function(error) {
+                            console.log('[AJAX ERROR]', error);
                             return null;
                         });
 
-                if (!json)
-                    return;
+                console.log(jsonResponse);
 
-                
+                if (!jsonResponse) return;
+
                 let groupes = {};
-                for (let c of json.clients) {
+                for (let c of jsonResponse.clients) {
                     if (c.latitude && c.longitude) {
                         let cle = c.latitude + ',' + c.longitude;
-                        if (!groupes[cle])
-                            groupes[cle] = [];
+                        if (!groupes[cle]) groupes[cle] = [];
                         groupes[cle].push(c);
                     }
                 }
 
-               
                 for (let cle in groupes) {
                     let clients = groupes[cle];
                     let [lat, lng] = cle.split(',').map(Number);
@@ -162,8 +163,8 @@
                         title: clients.length + ' client(s)'
                     });
 
-                    marker.addListener('click', (function (groupe) {
-                        return function () {
+                    marker.addListener('click', (function(groupe) {
+                        return function() {
                             afficherProfils(groupe);
                             document.getElementById('profil').scrollTop = 0;
                         };
@@ -171,7 +172,7 @@
                 }
             }
 
-            window.onload = function () {
+            window.onload = function() {
                 afficherHeader();
             };
         </script>

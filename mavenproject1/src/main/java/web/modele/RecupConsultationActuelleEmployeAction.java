@@ -18,19 +18,19 @@ public class RecupConsultationActuelleEmployeAction extends Action {
     public void execute(HttpServletRequest req) {
         System.out.println("\nRecupConsultationActuelleEmployeAction -------");
         HttpSession session = req.getSession();
-        if ("employe".equals(session.getAttribute("statut"))) {
-            Integer idEmploye = (Integer) session.getAttribute("id");
-            Employe employe = Service.recupererEmployeParId(idEmploye);
-            if (employe != null) {
-                Consultation consultation = Service.recupererConsultationActuelleEmploye(employe);
-                if (consultation != null) {
-                    Client client = consultation.getClient();
-                    List<Consultation> historique = Service.recupererConsulationsClient(client);
-                    req.setAttribute("consultation", consultation);
-                    req.setAttribute("client", client);
-                    req.setAttribute("historique", historique);
-                }
+
+        Integer idEmploye = (Integer) session.getAttribute("id");
+        Employe employe = Service.recupererEmployeParId(idEmploye);
+        if (employe != null) {
+            Consultation consultation = Service.recupererConsultationActuelleEmploye(employe);
+            if (consultation != null) {
+                Client client = consultation.getClient();
+                List<Consultation> historique = Service.recupererConsulationsClient(client);
+                req.setAttribute("consultation", consultation);
+                req.setAttribute("client", client);
+                req.setAttribute("historique", historique);
             }
         }
+
     }
 }

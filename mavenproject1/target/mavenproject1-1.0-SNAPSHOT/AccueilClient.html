@@ -5,44 +5,114 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Profil Astral</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .contenu {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 40px;
+            }
+
+            .panneau {
+                background-color: rgba(255,255,255,0.1);
+                border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 10px;
+                padding: 40px;
+                width: 100%;
+                max-width: 500px;
+                text-align: center;
+            }
+
+            .champ {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+
+            label {
+                color: white;
+                width: 180px;
+                text-align: right;
+                margin-right: 15px;
+                font-size: 14px;
+            }
+
+            .valeur {
+                background: #28477d;
+                border: 1px solid #365d9d;
+                border-radius: 5px;
+                padding: 6px 14px;
+                color: white;
+                width: 180px;
+                display: inline-block;
+                text-align: left;
+            }
+             h2 {
+                font-size: 18px;
+                font-style: italic;
+            }
+            
+        </style>
     </head>
     <body>
-        <h1>Mon Profil Astral</h1>
-        <h2 id="bienvenue"></h2>
-        <a href="listemediums.html"> mediums </a>
-        <a href="historique.html"> Historique </a>
-        <div>
-            <label > Signe du zodiaque: </label>
-            <span id="signeZodiaque"></span>
+        <nav id="header"></nav>
+        <div class="contenu">
+
+            <h1>Mon Profil Astral</h1>
+            <h2 id="bienvenue"></h2>
+            <div class="panneau">
+                <div class="champ">
+                    <label>Signe du zodiaque :</label>
+                    <span class="valeur" id="signeZodiaque"></span>
+                </div>
+                <div class="champ">
+                    <label>Signe chinois :</label>
+                    <span class="valeur" id="signeChinois"></span>
+                </div>
+                <div class="champ">
+                    <label>Couleur :</label>
+                    <span class="valeur" id="couleur"></span>
+                </div>
+                <div class="champ">
+                    <label>Animal totem :</label>
+                    <span class="valeur" id="AnimalTotem"></span>
+                </div>
+            </div>
         </div>
-         <div>
-             <label > Signe Chinois: </label>
-            <span id="signeChinois"></span>
-        </div>
-        <div>
-             <label >  Couleur: </label>
-            <span id="couleur"></span>
-        </div>
-         <div>
-            <label > AnimalTotem: </label>
-            <span id="AnimalTotem"></span>
-        </div>
-         
-        
-       
-         
-         
-         <script>
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+
+
+
+
+
+
+
+        <script src="header.js"></script>
+        <script>
             function initPage() {
                 console.log("Initialisation de la page");
                 AccederProfilAstral();
 
             }
-             async function AccederProfilAstral() {
-               
+            async function AccederProfilAstral() {
+
                 console.log("Appel de l'Action: AccederProfilAstral");
                 let url = `./ActionServlet?todo=acceder-profil-astral`; // TODO : appeler l'ActionServlet pour lister les demandes
 
@@ -62,23 +132,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 console.log(jsonResponse);
                 if (jsonResponse) {
                     console.log(jsonResponse);
-                    document.getElementById("bienvenue").textContent="Bienvenue " + jsonResponse.prenom +"!";
-                    document.getElementById("signeZodiaque").textContent=jsonResponse.signeZodiaque;
-                    document.getElementById("signeChinois").textContent=jsonResponse.signeChinois;
-                     document.getElementById("couleur").textContent=jsonResponse.couleur;
-                     document.getElementById("AnimalTotem").textContent=jsonResponse.AnimalTotem;
-                     
-                    
-                   
+                    document.getElementById("bienvenue").textContent = "Bienvenue " + jsonResponse.prenom + " !";
+                    document.getElementById("signeZodiaque").textContent = jsonResponse.signeZodiaque;
+                    document.getElementById("signeChinois").textContent = jsonResponse.signeChinois;
+                    document.getElementById("couleur").textContent = jsonResponse.couleur;
+                    document.getElementById("AnimalTotem").textContent = jsonResponse.AnimalTotem;
+
+
+
 
 
                 }
 
             }
-            window.onload = initPage;
+            window.onload = function () {
+                afficherHeader();
+                AccederProfilAstral();
+            }
         </script>
-   
-        
-        
+
+
+
     </body>
 </html>

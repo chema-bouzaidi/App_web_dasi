@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import metier.modele.Client;
 import metier.modele.Consultation;
 import metier.modele.Employe;
+import metier.modele.Medium;
 import metier.service.Service;
 import metier.service.ServiceInitialisation;
 import util.ApiInteraction;
@@ -24,12 +25,14 @@ public class Predictif_scenario_camille {
         ServiceInitialisation.initialiserClient();
         ServiceInitialisation.initialiserEmploye();
         ServiceInitialisation.initialiserMedium();
-        
+
         scenarioCamille();
     }
 
     public static void scenarioCamille() {
         System.out.println("=================SCENARIO CAMILLE=================");
+        
+        
         Consultation c = Service.demanderConsultation(Service.recupererClientParId(1), Service.recupererMediumParNom("Mme Irma"));
         Employe employe = Service.authentifierEmploye("cl@jaimail.fr", "123");
         Consultation consultation = Service.recupererConsultationActuelleEmploye(employe);
@@ -38,7 +41,7 @@ public class Predictif_scenario_camille {
         Client consultationClient = consultation.getClient();
         System.out.println("Profil astral du client de la consultation :");
         System.out.println(consultation.getClient().getProfilAstral());
-        
+
         System.out.println("Historique des consultations du client :");
         System.out.println(Service.recupererConsulationsClient(consultationClient));
         System.out.println("Prédiction obtenue :");

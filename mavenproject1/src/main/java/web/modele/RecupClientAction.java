@@ -16,26 +16,20 @@ import metier.service.Service;
  *
  * @author egoncalves
  */
-public class RecupClientAction extends Action{
-    
+public class RecupClientAction extends Action {
+
     @Override
     public void execute(HttpServletRequest req) {
         System.out.println("\nRecuperer Clientl ------- ");
         HttpSession session = req.getSession();
-        if (session.getAttribute("statut").equals("client")){
-            Integer idClient = (Integer) session.getAttribute("id");
-            Client client= Service.recupererClientParId(idClient);
-            List<Consultation> listeconsultations = Service.recupererConsulationsClient(client);
-            req.setAttribute("listeconsultations",listeconsultations);
-           
-            req.setAttribute("client",client);
-            
-        
-            
-            
-            
-        }
-            
-        }
-    
+
+        Integer idClient = (Integer) session.getAttribute("id");
+        Client client = Service.recupererClientParId(idClient);
+        List<Consultation> listeconsultations = Service.recupererConsulationsClient(client);
+        req.setAttribute("listeconsultations", listeconsultations);
+
+        req.setAttribute("client", client);
+
+    }
+
 }

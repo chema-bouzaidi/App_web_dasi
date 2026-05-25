@@ -15,15 +15,11 @@ public class SeMettrePretAction extends Action {
     public void execute(HttpServletRequest req) {
         System.out.println("\nSeMettrePretAction -------");
         HttpSession session = req.getSession();
-        if ("employe".equals(session.getAttribute("statut"))) {
-            Integer idEmploye = (Integer) session.getAttribute("id");
-            Employe employe = Service.recupererEmployeParId(idEmploye);
-            if (employe != null) {
-                Boolean ok = Service.seMettrePret(employe);
-                req.setAttribute("succes", ok);
-            } else {
-                req.setAttribute("succes", false);
-            }
+        Integer idEmploye = (Integer) session.getAttribute("id");
+        Employe employe = Service.recupererEmployeParId(idEmploye);
+        if (employe != null) {
+            Boolean ok = Service.seMettrePret(employe);
+            req.setAttribute("succes", ok);
         } else {
             req.setAttribute("succes", false);
         }

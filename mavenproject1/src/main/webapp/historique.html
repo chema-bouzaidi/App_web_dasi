@@ -5,52 +5,128 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title> Historique Consultations</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .contenu {
+                flex: 1;
+                padding: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+
+
+            .consultation {
+                background: rgba(0,0,0,0.2);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 6px;
+                margin-bottom: 10px;
+            }
+
+            .entete {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 20px;
+            }
+
+            .donnee {
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                color: white;
+                font-size: 14px;
+            }
+
+            .donnee span {
+                background: #28477d;
+                border: 1px solid #365d9d;
+                padding: 4px 12px;
+                border-radius: 5px;
+                color: white;
+                margin-left: 6px;
+            }
+            h2 {
+                font-size: 18px;
+                font-style: italic;
+            }
+        </style>
+
+
     </head>
     <body>
-        <h1>Historique des consultations</h1>
-        <h2>Mes consultations</h2>
+        <nav id="header"></nav>
+        <div class="contenu">
+            <h1>Historique des consultations</h1>
+            <h2>Mes consultations</h2>
+            <div class="panneau" id="liste-consultations"></div>
+        </div>
+        <footer>
+            <div>
+                <div>PREDICT'IF</div>
+                <div>INSA Lyon, 31 Avenue Jean Capelle</div>
+                <div>69621, Villeurbanne</div>
+            </div>
+            <div style="text-align:right">
+                <div>CONTACTS</div>
+                <div>contact@predictif.arnaque</div>
+                <div>07 68 95 11 60</div>
+            </div>
+        </footer>
+        <script src="header.js"></script>
+        <script>
 
-        <ul id="liste-consultations"></ul>
-         <script>
-              function initPage() {
-                console.log("Initialisation de la page");
-                chargerHistorique();
-
-            }
             async function chargerHistorique() {
-                
+
 
                 let url = `./ActionServlet?todo=historique-consultations`;
 
                 let jsonResponse = await fetch(url)
-                    .then((httpResponse) => {
-                        if (!httpResponse.ok) {
-                            throw 'HTTP Error ' + httpResponse.status;
-                        }
-                        return httpResponse.json();
-                    })
-                    .catch((error) => {
-                        console.log('[AJAX ERROR]', error);
-                        return null;
-                    });
+                        .then((httpResponse) => {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
+                        })
+                        .catch((error) => {
+                            console.log('[AJAX ERROR]', error);
+                            return null;
+                        });
 
                 console.log(jsonResponse);
 
                 if (jsonResponse) {
-                    let ul = document.getElementById("liste-consultations");
-                    for (let consultation of jsonResponse.historique) {
-                        let li = document.createElement("li");
-                        li.textContent = "Médium : " + consultation.medium + " Date : " + consultation.date;
-                        ul.appendChild(li);
+                    let liste = document.getElementById("liste-consultations");
+                    if (!jsonResponse.historique || jsonResponse.historique.length === 0) {
+                        liste.innerHTML = '<p style=" text-align:center;">Aucune consultation !</p>';
+                        return;
                     }
+                    for (let consultation of jsonResponse.historique) {
+                        let div = document.createElement("div");
+                        div.className = 'consultation';
+                        div.innerHTML = `
+                            <div class="entete">
+                                <div class="donnee">
+                                    <div>Médium : <span>${consultation.medium}</span></div>
+                                    <div>Date : <span>${consultation.date}</span></div>
+                                </div>
+                            </div>
+                        `;
+                        liste.appendChild(div);
+                    }
+
                 }
             }
+            window.onload = function () {
+                afficherHeader();
+                chargerHistorique();
+            };
 
-            window.onload = initPage;
         </script>
-        
+
     </body>
 </html>

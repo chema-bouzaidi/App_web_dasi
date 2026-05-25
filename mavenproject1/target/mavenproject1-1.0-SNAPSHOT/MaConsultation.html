@@ -14,9 +14,8 @@
                 align-items: center;
             }
 
-            /* --- GRAND PANNEAU CENTRAL DE LA MAQUETTE --- */
             .panneau-consultation {
-                background-color: #1c335e; /* Bleu nuit fidèle à l'image */
+                background-color: #1c335e;
                 background-image: linear-gradient(135deg, #16264c 0%, #1f3b6b 100%);
                 border: 1px solid rgba(255,255,255,0.15);
                 border-radius: 10px;
@@ -30,7 +29,6 @@
                 position: relative;
             }
 
-            /* --- TITRES INTERNES CENTRÉS (DANS LE BLOC BLEU) --- */
             .entete-interne {
                 width: 100%;
                 margin-bottom: 20px;
@@ -53,7 +51,6 @@
                 margin-bottom: 5px;
             }
 
-            /* --- SECTION GAUCHE : PROFIL ASTRAL --- */
             .section-profil {
                 flex: 1;
                 min-width: 320px;
@@ -91,7 +88,6 @@
                 display: inline-block;
             }
 
-            /* --- SECTION DROITE : HISTORIQUE --- */
             .section-historique {
                 flex: 1;
                 min-width: 380px;
@@ -105,7 +101,6 @@
                 font-weight: bold;
             }
 
-            /* --- LISTE DÉROULANTE (ACCORDÉON) --- */
             .card-consultation {
                 background: rgba(0, 0, 0, 0.2);
                 border: 1px solid rgba(255, 255, 255, 0.08);
@@ -122,9 +117,7 @@
                 cursor: pointer;
                 user-select: none;
             }
-            .card-header:hover {
-                background: rgba(255,255,255,0.03);
-            }
+            .card-header:hover { background: rgba(255,255,255,0.03); }
             .card-consultation .meta {
                 color: #ffffff;
                 display: flex;
@@ -155,11 +148,8 @@
                 color: #ffffff;
                 line-height: 1.6;
             }
-            .card-consultation.actif .card-body {
-                display: block;
-            }
+            .card-consultation.actif .card-body { display: block; }
 
-            /* --- BOUTONS ET BLOCS DE LA MAQUETTE DE CONSULTATION ACTIVE --- */
             .zone-bouton-centre {
                 width: 100%;
                 display: flex;
@@ -167,7 +157,7 @@
                 margin-top: 15px;
             }
             .btn-demarrer, .btn-action, .btn-terminer {
-                background-color: #633b7a; /* Violet sombre de l'image */
+                background-color: #633b7a;
                 color: white;
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 border-radius: 8px;
@@ -176,11 +166,8 @@
                 font-size: 15px;
                 transition: background-color 0.2s ease;
             }
-            .btn-demarrer:hover, .btn-action:hover, .btn-terminer:hover {
-                background-color: #4f2d63;
-            }
+            .btn-demarrer:hover, .btn-action:hover, .btn-terminer:hover { background-color: #4f2d63; }
 
-            /* Conteneur principal pour la phase active */
             #phase-consultation-container {
                 width: 100%;
                 max-width: 950px;
@@ -189,96 +176,38 @@
                 gap: 25px;
             }
 
-            .colonnes-consultation {
-                display: flex;
-                gap: 40px;
-                width: 100%;
-            }
-
-            .colonne-pred {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .section-titre {
-                font-size: 24px;
-                color: white;
-                margin-bottom: 20px;
-                font-family: Arial, sans-serif;
-            }
-
-            .sub-section-titre {
-                font-size: 15px;
-                color: #ccd6f6;
-                margin-bottom: 10px;
-            }
-
-            /* Grille pour les prédictions (Amour, Santé, Travail) */
-            .prediction-grid-container {
-                display: flex;
-                gap: 15px;
-                align-items: flex-start;
-            }
-
-            .grille-niveaux {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .niveaux {
-                display: flex;
-                gap: 8px;
-                align-items: center;
-            }
-            .niveaux label {
-                width: 60px;
-                font-size: 15px;
-                color: white;
-            }
+            .colonnes-consultation { display: flex; gap: 40px; width: 100%; }
+            .colonne-pred { flex: 1; display: flex; flex-direction: column; }
+            .section-titre { font-size: 24px; color: white; margin-bottom: 20px; font-family: Arial, sans-serif; }
+            .sub-section-titre { font-size: 15px; color: #ccd6f6; margin-bottom: 10px; }
+            .prediction-grid-container { display: flex; gap: 15px; align-items: flex-start; }
+            .grille-niveaux { display: flex; flex-direction: column; gap: 10px; }
+            .niveaux { display: flex; gap: 8px; align-items: center; }
+            .niveaux label { width: 60px; font-size: 15px; color: white; }
             .niveaux button {
-                width: 32px;
-                height: 32px;
-                background: #505c8c; /* Bleu-gris des boutons inactifs */
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-weight: bold;
-                font-size: 14px;
+                width: 32px; height: 32px;
+                background: #505c8c; color: white;
+                border: none; border-radius: 5px;
+                cursor: pointer; font-weight: bold; font-size: 14px;
             }
-            .niveaux button.selectionne {
-                background-color: #8352a3; /* Violet clair pour l'élément sélectionné */
-            }
+            .niveaux button.selectionne { background-color: #8352a3; }
 
-            /* Zone d'affichage du texte de la prédiction */
             #zone-prediction {
-                flex: 1;
-                min-height: 115px;
+                flex: 1; min-height: 115px;
                 background: rgba(0, 0, 0, 0.2);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 6px;
-                padding: 12px;
-                font-size: 14px;
-                color: #ffffff;
-                line-height: 1.4;
-                max-width: 250px;
+                border-radius: 6px; padding: 12px;
+                font-size: 14px; color: #ffffff;
+                line-height: 1.4; max-width: 250px;
             }
 
-            /* Bloc Commentaire */
             #commentaire {
-                display: block;
-                width: 100%;
-                height: 115px;
+                display: block; width: 100%; height: 115px;
                 background: rgba(0, 0, 0, 0.2);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 6px;
-                color: white;
-                padding: 12px;
-                font-size: 14px;
-                box-sizing: border-box;
-                resize: none;
+                border-radius: 6px; color: white;
+                padding: 12px; font-size: 14px;
+                box-sizing: border-box; resize: none;
             }
         </style>
     </head>
@@ -310,9 +239,7 @@
             function toggleAccordeon(element) {
                 let card = element.parentElement;
                 let fleche = element.querySelector('.fleche');
-                
                 card.classList.toggle('actif');
-                
                 if (card.classList.contains('actif')) {
                     fleche.textContent = '∨';
                 } else {
@@ -321,93 +248,113 @@
             }
 
             async function chargerMaConsultation() {
+                console.log("Appel de l'Action: ma-consultation");
                 let url = './ActionServlet?todo=ma-consultation';
-                let json = await fetch(url)
-                    .then(r => { if (!r.ok) throw r.status; return r.json(); })
-                    .catch(e => { console.log(e); return null; });
+
+                let jsonResponse = await fetch(url)
+                        .then(function(httpResponse) {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
+                        })
+                        .catch(function(error) {
+                            console.log('[AJAX ERROR]', error);
+                            return null;
+                        });
+
+                console.log(jsonResponse);
 
                 let attente = document.getElementById('phase-attente');
 
-                if (!json || !json.succes) {
-                    attente.innerHTML = '<p style="color:#ccd6f6; font-style:italic;">Aucune consultation en cours.</p>';
-                    return;
-                }
-
-                let historiqueHtml = '';
-                if (!json.historique || json.historique.length === 0) {
-                    historiqueHtml = '<p style="color:#ffffff; font-size:13px;">Aucune consultation passée.</p>';
-                } else {
-                    for (let c of json.historique) {
-                        historiqueHtml += `
-                            <div class="card-consultation">
-                                <div class="card-header" onclick="toggleAccordeon(this)">
-                                    <div class="meta">
-                                        <div>Médium: <span>${c.medium}</span></div>  
-                                        <div>Date: <span>${c.date}</span></div>
-                                    </div>
-                                    <div class="fleche">&gt;</div>
-                                </div>
-                                <div class="card-body">
-                                    <strong>Commentaire :</strong> ${c.commentaire ? c.commentaire : 'Aucun commentaire.'}
-                                </div>
-                            </div>`;
+                if (jsonResponse) {
+                    if (!jsonResponse.succes) {
+                        attente.innerHTML = '<p style="color:#ccd6f6; font-style:italic;">Aucune consultation en cours.</p>';
+                        return;
                     }
+
+                    let historiqueHtml = '';
+                    if (!jsonResponse.historique || jsonResponse.historique.length === 0) {
+                        historiqueHtml = '<p style="color:#ffffff; font-size:13px;">Aucune consultation passée.</p>';
+                    } else {
+                        for (let c of jsonResponse.historique) {
+                            historiqueHtml += `
+                                <div class="card-consultation">
+                                    <div class="card-header" onclick="toggleAccordeon(this)">
+                                        <div class="meta">
+                                            <div>Médium: <span>${c.medium}</span></div>
+                                            <div>Date: <span>${c.date}</span></div>
+                                        </div>
+                                        <div class="fleche">&gt;</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <strong>Commentaire :</strong> ${c.commentaire ? c.commentaire : 'Aucun commentaire.'}
+                                    </div>
+                                </div>`;
+                        }
+                    }
+
+                    attente.innerHTML = `
+                        <div class="panneau-consultation" id="main-panel">
+                            <div class="entete-interne">
+                                <h1 class="titre-page">Ma Consultation avec ${jsonResponse.prenomClient} ${jsonResponse.nomClient}</h1>
+                                <div class="sous-titre">Vous incarnez ${jsonResponse.denominationMedium} !</div>
+                            </div>
+                            <div class="section-profil" id="sec-profil">
+                                <h2>Profil astral</h2>
+                                <div class="champ"><label>Signe du zodiaque :</label><span>${jsonResponse.signeZodiaque}</span></div>
+                                <div class="champ"><label>Signe chinois :</label><span>${jsonResponse.signeChinois}</span></div>
+                                <div class="champ"><label>Couleur :</label><span>${jsonResponse.couleur}</span></div>
+                                <div class="champ"><label>Animal totem :</label><span>${jsonResponse.animalTotem}</span></div>
+                            </div>
+                            <div class="section-historique" id="sec-historique">
+                                <h2>Historique</h2>
+                                ${historiqueHtml}
+                            </div>
+                            <div class="zone-bouton-centre" id="sec-bouton-demarrer">
+                                <button class="btn-demarrer" onclick="demarrerConsultation()">Démarrer la consultation</button>
+                            </div>
+                        </div>
+                    `;
                 }
-
-                attente.innerHTML = `
-                    <div class="panneau-consultation" id="main-panel">
-                        <div class="entete-interne">
-                            <h1 class="titre-page">Ma Consultation avec ${json.prenomClient} ${json.nomClient}</h1>
-                            <div class="sous-titre">Vous incarnez ${json.denominationMedium} !</div>
-                        </div>
-
-                        <div class="section-profil" id="sec-profil">
-                            <h2>Profil astral</h2>
-                            <div class="champ"><label>Signe du zodiaque :</label><span>${json.signeZodiaque}</span></div>
-                            <div class="champ"><label>Signe chinois :</label><span>${json.signeChinois}</span></div>
-                            <div class="champ"><label>Couleur :</label><span>${json.couleur}</span></div>
-                            <div class="champ"><label>Animal totem :</label><span>${json.animalTotem}</span></div>
-                        </div>
-
-                        <div class="section-historique" id="sec-historique">
-                            <h2>Historique</h2>
-                            ${historiqueHtml}
-                        </div>
-
-                        <div class="zone-bouton-centre" id="sec-bouton-demarrer">
-                            <button class="btn-demarrer" onclick="demarrerConsultation()">Démarrer la consultation</button>
-                        </div>
-                    </div>
-                `;
             }
 
             async function demarrerConsultation() {
+                console.log("Appel de l'Action: se-mettre-pret");
                 let url = './ActionServlet?todo=se-mettre-pret';
-                let json = await fetch(url)
-                    .then(r => { if (!r.ok) throw r.status; return r.json(); })
-                    .catch(e => { console.log(e); return null; });
 
-                if (json && json.succes) {
-                    alert('Vous recevrez vite un appel du client !');
-                    
-                    // On vide le contenu précédent (profil et historique) de notre panneau bleu nuit
-                    document.getElementById('sec-profil').remove();
-                    document.getElementById('sec-historique').remove();
-                    document.getElementById('sec-bouton-demarrer').remove();
-                    
-                    // On appelle la fonction pour injecter la nouvelle structure à l'intérieur du panneau bleu nuit
-                    afficherPhaseConsultation();
-                } else {
-                    alert('Échec du démarrage de la consultation.');
+                let jsonResponse = await fetch(url)
+                        .then(function(httpResponse) {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
+                        })
+                        .catch(function(error) {
+                            console.log('[AJAX ERROR]', error);
+                            return null;
+                        });
+
+                console.log(jsonResponse);
+
+                if (jsonResponse) {
+                    if (jsonResponse.succes) {
+                        alert('Vous recevrez vite un appel du client !');
+                        document.getElementById('sec-profil').remove();
+                        document.getElementById('sec-historique').remove();
+                        document.getElementById('sec-bouton-demarrer').remove();
+                        afficherPhaseConsultation();
+                    } else {
+                        alert('Échec du démarrage de la consultation.');
+                    }
                 }
             }
 
             function afficherPhaseConsultation() {
                 let panel = document.getElementById('main-panel');
-
                 let container = document.getElementById('phase-consultation-container');
                 container.style.display = 'flex';
-                
+
                 container.innerHTML = `
                     <div class="colonnes-consultation">
                         <div class="colonne-pred">
@@ -437,20 +384,17 @@
                                 <div id="zone-prediction"><em>Les lignes de votre avenir s'écriront ici...</em></div>
                             </div>
                         </div>
-
                         <div class="colonne-pred">
                             <div class="section-titre">Commentaire</div>
                             <div class="sub-section-titre">Décrivez votre ressenti du client sur cette consultation :</div>
                             <textarea id="commentaire" placeholder="Paul a toujours l'air aussi naïf..."></textarea>
                         </div>
                     </div>
-
                     <div class="zone-bouton-centre">
                         <button id="btn-terminer" class="btn-terminer" onclick="terminerConsultation()">Terminer la consultation</button>
                     </div>
                 `;
-                
-                // On déplace le conteneur créé à l'intérieur du panneau bleu nuit global
+
                 panel.appendChild(container);
             }
 
@@ -466,31 +410,59 @@
                     alert('Veuillez sélectionner un niveau pour Amour, Santé et Travail.');
                     return;
                 }
+                console.log("Appel de l'Action: obtenir-prediction");
                 let url = `./ActionServlet?todo=obtenir-prediction&amour=${niveaux.amour}&sante=${niveaux.sante}&travail=${niveaux.travail}`;
-                let json = await fetch(url)
-                    .then(r => { if (!r.ok) throw r.status; return r.json(); })
-                    .catch(e => { console.log(e); return null; });
+
+                let jsonResponse = await fetch(url)
+                        .then(function(httpResponse) {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
+                        })
+                        .catch(function(error) {
+                            console.log('[AJAX ERROR]', error);
+                            return null;
+                        });
+
+                console.log(jsonResponse);
 
                 let zone = document.getElementById('zone-prediction');
-                if (json && json.succes && json.prediction) {
-                    zone.innerHTML = json.prediction.join('<br><br>');
-                } else {
-                    zone.innerHTML = '<em>Impossible d\'obtenir une prédiction.</em>';
+                if (jsonResponse) {
+                    if (jsonResponse.succes && jsonResponse.prediction) {
+                        zone.innerHTML = jsonResponse.prediction.join('<br><br>');
+                    } else {
+                        zone.innerHTML = '<em>Impossible d\'obtenir une prédiction.</em>';
+                    }
                 }
             }
 
             async function terminerConsultation() {
                 let commentaire = document.getElementById('commentaire').value;
+                console.log("Appel de l'Action: terminer-consultation");
                 let url = './ActionServlet?todo=terminer-consultation';
                 let options = { method: 'POST', body: new URLSearchParams({ commentaire: commentaire }) };
-                let json = await fetch(url, options)
-                    .then(r => { if (!r.ok) throw r.status; return r.json(); })
-                    .catch(e => { console.log(e); return null; });
 
-                if (json && json.succes) {
-                    window.location.href = 'AccueilEmp.html';
-                } else {
-                    alert('Échec de la clôture de la consultation.');
+                let jsonResponse = await fetch(url, options)
+                        .then(function(httpResponse) {
+                            if (!httpResponse.ok) {
+                                throw 'HTTP Error ' + httpResponse.status;
+                            }
+                            return httpResponse.json();
+                        })
+                        .catch(function(error) {
+                            console.log('[AJAX ERROR]', error);
+                            return null;
+                        });
+
+                console.log(jsonResponse);
+
+                if (jsonResponse) {
+                    if (jsonResponse.succes) {
+                        window.location.href = 'AccueilEmp.html';
+                    } else {
+                        alert('Échec de la clôture de la consultation.');
+                    }
                 }
             }
 
